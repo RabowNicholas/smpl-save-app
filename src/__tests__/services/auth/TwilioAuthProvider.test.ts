@@ -54,7 +54,7 @@ describe('TwilioAuthProvider', () => {
       'test-account-sid',
       'test-auth-token',
       'test-verify-service-sid',
-      mockDatabaseClient as any
+      mockDatabaseClient as DatabaseClient
     )
   })
 

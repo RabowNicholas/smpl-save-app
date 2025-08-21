@@ -106,7 +106,7 @@ export function ServiceSelector({
   if (!loading && filteredServices.length === 0 && searchTerm) {
     return (
       <div className="text-center py-12">
-        <p className="text-gray-600">No services found for "{searchTerm}"</p>
+        <p className="text-gray-600">No services found for &quot;{searchTerm}&quot;</p>
       </div>
     )
   }
