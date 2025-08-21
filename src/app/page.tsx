@@ -1,103 +1,125 @@
-import Image from "next/image";
+'use client'
+
+import { useState } from 'react'
+import { AuthPage } from '@/ui/components/AuthPage'
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [step, setStep] = useState<'phone' | 'code'>('phone')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | undefined>()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const handlePhoneSubmit = async (phone: string) => {
+    setLoading(true)
+    setError(undefined)
+    
+    try {
+      // Mock API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      setPhoneNumber(phone)
+      setStep('code')
+    } catch (err) {
+      setError('Failed to send verification code')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleCodeSubmit = async (phone: string, code: string) => {
+    setLoading(true)
+    setError(undefined)
+    
+    try {
+      // Mock API call
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      if (code === '123456') {
+        setIsAuthenticated(true)
+      } else {
+        setError('Invalid verification code')
+      }
+    } catch (err) {
+      setError('Failed to verify code')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const handleBack = () => {
+    setStep('phone')
+    setError(undefined)
+  }
+
+  if (isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="max-w-md w-full space-y-8 p-8">
+          <div className="text-center">
+            <h1 className="text-3xl font-bold text-gray-900 mb-4">
+              Welcome! Let&apos;s set up your services
+            </h1>
+            <p className="text-gray-600">
+              Start by selecting the services you currently use.
+            </p>
+          </div>
+          
+          <div className="space-y-4">
+            <div 
+              data-testid="category-streaming"
+              className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 cursor-pointer"
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-2xl">🎬</span>
+                <div>
+                  <h3 className="font-medium text-gray-900">Streaming & Entertainment</h3>
+                  <p className="text-sm text-gray-600">Netflix, Hulu, Disney+, etc.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div 
+              data-testid="category-groceries"
+              className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 cursor-pointer"
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-2xl">🛒</span>
+                <div>
+                  <h3 className="font-medium text-gray-900">Groceries</h3>
+                  <p className="text-sm text-gray-600">Walmart, Target, Kroger, etc.</p>
+                </div>
+              </div>
+            </div>
+            
+            <div 
+              data-testid="category-internet"
+              className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 cursor-pointer"
+            >
+              <div className="flex items-center space-x-3">
+                <span className="text-2xl">📡</span>
+                <div>
+                  <h3 className="font-medium text-gray-900">Internet / Phone</h3>
+                  <p className="text-sm text-gray-600">Verizon, AT&T, Comcast, etc.</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <AuthPage
+        step={step}
+        onPhoneSubmit={handlePhoneSubmit}
+        onCodeSubmit={handleCodeSubmit}
+        onBack={step === 'code' ? handleBack : undefined}
+        phoneNumber={phoneNumber}
+        loading={loading}
+        error={error}
+      />
     </div>
-  );
+  )
 }
