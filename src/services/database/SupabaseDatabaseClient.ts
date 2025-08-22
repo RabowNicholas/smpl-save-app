@@ -4,7 +4,10 @@ import { createUser } from '@/core/entities/User'
 
 export class SupabaseDatabaseClient implements DatabaseClient {
   async saveUserService(userService: UserService): Promise<void> {
-    const { data, error } = await supabase
+    // Use service client to bypass RLS for user service operations during phone auth
+    const serviceClient = createServiceClient()
+    
+    const { data, error } = await serviceClient
       .from('user_services')
       .insert({
         user_id: userService.userId,
@@ -19,7 +22,10 @@ export class SupabaseDatabaseClient implements DatabaseClient {
   }
 
   async removeUserService(userId: string, serviceId: string): Promise<void> {
-    const { data, error } = await supabase
+    // Use service client to bypass RLS for user service operations during phone auth
+    const serviceClient = createServiceClient()
+    
+    const { data, error } = await serviceClient
       .from('user_services')
       .delete()
       .eq('user_id', userId)
@@ -31,7 +37,10 @@ export class SupabaseDatabaseClient implements DatabaseClient {
   }
 
   async getUserServices(userId: string): Promise<UserService[]> {
-    const { data, error } = await supabase
+    // Use service client to bypass RLS for user service operations during phone auth
+    const serviceClient = createServiceClient()
+    
+    const { data, error } = await serviceClient
       .from('user_services')
       .select('*')
       .eq('user_id', userId)

@@ -127,9 +127,15 @@ export function AuthPage({
   if (step === 'phone') {
     return (
       <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6 text-center">
-          Sign in with your phone
-        </h1>
+        <div className="text-center mb-6">
+          <div className="text-4xl mb-3">🔒</div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Secure Your Savings Journey
+          </h1>
+          <p className="text-gray-600 text-sm">
+We&apos;ll send a code to verify your phone and keep your data safe
+          </p>
+        </div>
         
         {error && (
           <div 
@@ -161,7 +167,7 @@ export function AuthPage({
               disabled={loading}
             />
             <p id="phone-help" className="mt-1 text-sm text-gray-600">
-              We&apos;ll send you a verification code
+              We&apos;ll send you a verification code to get started
             </p>
             {phoneError && (
               <p className="mt-1 text-sm text-red-600" role="alert">
@@ -181,7 +187,7 @@ export function AuthPage({
                 data-testid="loading-spinner"
               />
             )}
-            {loading ? 'Sending...' : 'Send verification code'}
+{loading ? 'Sending...' : 'Start Finding Savings'}
           </button>
         </form>
       </div>
@@ -190,13 +196,19 @@ export function AuthPage({
 
   return (
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h1 className="text-2xl font-bold text-gray-900 mb-2 text-center">
-        Enter verification code
-      </h1>
-      
-      <p className="text-gray-600 text-center mb-6">
-        We sent a code to {formatPhoneDisplay(phoneNumber)}
-      </p>
+      <div className="text-center mb-6">
+        <div className="text-4xl mb-3">📱</div>
+        <h1 className="text-2xl font-bold text-gray-900 mb-2">
+          Enter your verification code
+        </h1>
+        
+        <p className="text-gray-600">
+          We sent a code to {formatPhoneDisplay(phoneNumber)}
+        </p>
+        <p className="text-sm text-gray-500 mt-1">
+          Almost there! Your savings dashboard is waiting
+        </p>
+      </div>
       
       {error && (
         <div 
@@ -247,7 +259,7 @@ export function AuthPage({
                 data-testid="loading-spinner"
               />
             )}
-            {loading ? 'Verifying...' : 'Verify'}
+{loading ? 'Verifying...' : 'Access My Savings Dashboard'}
           </button>
           
           {onBack && (

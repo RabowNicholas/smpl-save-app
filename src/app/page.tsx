@@ -1,7 +1,12 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AuthPage } from '@/ui/components/AuthPage'
+import { AppProvider, useApp } from '@/ui/context/AppContext'
+import { WelcomeScreen } from '@/ui/components/WelcomeScreen'
+import { VisualServicesPage } from '@/ui/components/VisualServicesPage'
+import { ProgressPage } from '@/ui/components/ProgressPage'
+import { Dashboard } from '@/ui/components/Dashboard'
 
 export default function Home() {
   const [step, setStep] = useState<'phone' | 'code'>('phone')
@@ -58,7 +63,10 @@ export default function Home() {
         throw new Error(result.error || 'Failed to verify code')
       }
       
+      const user = result.user
       setIsAuthenticated(true)
+      // Store user data for later use
+      localStorage.setItem('user', JSON.stringify(user))
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Failed to verify code'
       setError(errorMessage)
@@ -73,61 +81,7 @@ export default function Home() {
   }
 
   if (isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="max-w-md w-full space-y-8 p-8">
-          <div className="text-center">
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">
-              Welcome! Let&apos;s set up your services
-            </h1>
-            <p className="text-gray-600">
-              Start by selecting the services you currently use.
-            </p>
-          </div>
-          
-          <div className="space-y-4">
-            <div 
-              data-testid="category-streaming"
-              className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 cursor-pointer"
-            >
-              <div className="flex items-center space-x-3">
-                <span className="text-2xl">🎬</span>
-                <div>
-                  <h3 className="font-medium text-gray-900">Streaming & Entertainment</h3>
-                  <p className="text-sm text-gray-600">Netflix, Hulu, Disney+, etc.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div 
-              data-testid="category-groceries"
-              className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 cursor-pointer"
-            >
-              <div className="flex items-center space-x-3">
-                <span className="text-2xl">🛒</span>
-                <div>
-                  <h3 className="font-medium text-gray-900">Groceries</h3>
-                  <p className="text-sm text-gray-600">Walmart, Target, Kroger, etc.</p>
-                </div>
-              </div>
-            </div>
-            
-            <div 
-              data-testid="category-internet"
-              className="p-4 border border-gray-200 rounded-lg hover:border-gray-300 cursor-pointer"
-            >
-              <div className="flex items-center space-x-3">
-                <span className="text-2xl">📡</span>
-                <div>
-                  <h3 className="font-medium text-gray-900">Internet / Phone</h3>
-                  <p className="text-sm text-gray-600">Verizon, AT&T, Comcast, etc.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    )
+    return <MainApp />
   }
 
   return (
@@ -143,4 +97,52 @@ export default function Home() {
       />
     </div>
   )
+}
+
+function MainApp() {
+  return (
+    <AppProvider>
+      <AppContent />
+    </AppProvider>
+  )
+}
+
+function AppContent() {
+  const { state, dispatch } = useApp()
+  const { currentStep, user } = state
+
+  // Load user from localStorage on mount
+  useEffect(() => {
+    const storedUser = localStorage.getItem('user')
+    if (storedUser) {
+      try {
+        const userData = JSON.parse(storedUser)
+        dispatch({ type: 'SET_USER', payload: userData })
+        // If user exists, skip welcome screen
+        if (currentStep === 'welcome') {
+          dispatch({ type: 'SET_STEP', payload: 'visual-services' })
+        }
+      } catch (error) {
+        console.error('Failed to parse stored user data:', error)
+        localStorage.removeItem('user')
+      }
+    }
+  }, [currentStep])
+
+  const handleGetStarted = () => {
+    dispatch({ type: 'SET_STEP', payload: 'visual-services' })
+  }
+
+  switch (currentStep) {
+    case 'welcome':
+      return <WelcomeScreen onGetStarted={handleGetStarted} />
+    case 'visual-services':
+      return <VisualServicesPage />
+    case 'progress':
+      return <ProgressPage />
+    case 'dashboard':
+      return <Dashboard />
+    default:
+      return <WelcomeScreen onGetStarted={handleGetStarted} />
+  }
 }
