@@ -21,8 +21,8 @@ export function validatePhoneNumber(phone: string): boolean {
     return false
   }
 
-  // Must start with + and be between 10-14 digits (not 15)
-  const phoneRegex = /^\+\d{10,14}$/
+  // Must start with + and be between 7-15 digits (E.164 format)
+  const phoneRegex = /^\+\d{7,15}$/
   return phoneRegex.test(phone)
 }
 

@@ -1,4 +1,4 @@
-import { supabase } from './supabase'
+import { supabase, createServiceClient } from './supabase'
 import { DatabaseClient, UserService, Service, Category, User } from '@/core/types'
 import { createUser } from '@/core/entities/User'
 
@@ -87,7 +87,10 @@ export class SupabaseDatabaseClient implements DatabaseClient {
   async createUser(phone: string): Promise<User> {
     const user = createUser(phone)
     
-    const { data, error } = await supabase
+    // Use service client to bypass RLS for user creation during phone auth
+    const serviceClient = createServiceClient()
+    
+    const { data, error } = await serviceClient
       .from('users')
       .insert({
         id: user.id,
@@ -106,7 +109,10 @@ export class SupabaseDatabaseClient implements DatabaseClient {
   }
 
   async getUserByPhone(phone: string): Promise<User | null> {
-    const { data, error } = await supabase
+    // Use service client to bypass RLS for user lookup during phone auth
+    const serviceClient = createServiceClient()
+    
+    const { data, error } = await serviceClient
       .from('users')
       .select('*')
       .eq('phone', phone)

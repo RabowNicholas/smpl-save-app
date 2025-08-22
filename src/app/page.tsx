@@ -15,12 +15,25 @@ export default function Home() {
     setError(undefined)
     
     try {
-      // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const response = await fetch('/api/auth/send-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone }),
+      })
+      
+      const result = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to send verification code')
+      }
+      
       setPhoneNumber(phone)
       setStep('code')
     } catch (err) {
-      setError('Failed to send verification code')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to send verification code'
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }
@@ -31,16 +44,24 @@ export default function Home() {
     setError(undefined)
     
     try {
-      // Mock API call
-      await new Promise(resolve => setTimeout(resolve, 1000))
+      const response = await fetch('/api/auth/verify-code', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ phone, code }),
+      })
       
-      if (code === '123456') {
-        setIsAuthenticated(true)
-      } else {
-        setError('Invalid verification code')
+      const result = await response.json()
+      
+      if (!response.ok) {
+        throw new Error(result.error || 'Failed to verify code')
       }
+      
+      setIsAuthenticated(true)
     } catch (err) {
-      setError('Failed to verify code')
+      const errorMessage = err instanceof Error ? err.message : 'Failed to verify code'
+      setError(errorMessage)
     } finally {
       setLoading(false)
     }

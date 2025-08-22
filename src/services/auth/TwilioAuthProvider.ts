@@ -20,6 +20,8 @@ export class TwilioAuthProvider implements AuthProvider {
     }
 
     try {
+      console.log('Sending verification to:', phone, 'Service SID:', this.verifyServiceSid)
+      
       const verification = await this.client.verify.v2
         .services(this.verifyServiceSid)
         .verifications.create({
@@ -27,10 +29,17 @@ export class TwilioAuthProvider implements AuthProvider {
           channel: 'sms',
         })
 
+      console.log('Verification sent:', { 
+        sid: verification.sid, 
+        status: verification.status, 
+        to: verification.to 
+      })
+
       if (verification.status !== 'pending') {
         throw new Error('Failed to initiate verification')
       }
     } catch (error) {
+      console.error('Send verification error:', error)
       if (error instanceof Error) {
         throw new Error(`Failed to send verification code: ${error.message}`)
       }
@@ -48,12 +57,20 @@ export class TwilioAuthProvider implements AuthProvider {
     }
 
     try {
+      console.log('Verifying code for:', phone, 'Code:', code, 'Service SID:', this.verifyServiceSid)
+      
       const verificationCheck = await this.client.verify.v2
         .services(this.verifyServiceSid)
         .verificationChecks.create({
           to: phone,
           code,
         })
+
+      console.log('Verification check result:', { 
+        status: verificationCheck.status, 
+        valid: verificationCheck.valid,
+        sid: verificationCheck.sid 
+      })
 
       if (!this.isValidVerificationStatus(verificationCheck.status)) {
         throw new Error('Invalid verification code')
@@ -76,6 +93,7 @@ export class TwilioAuthProvider implements AuthProvider {
 
       return user
     } catch (error) {
+      console.error('Verify code error:', error)
       if (error instanceof Error) {
         // Re-throw our custom errors
         if (error.message.includes('Invalid verification code') || 
