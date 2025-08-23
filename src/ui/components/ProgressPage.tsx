@@ -137,14 +137,14 @@ export function ProgressPage() {
         <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50 mb-8">
           {/* Enhanced celebration visual */}
           <div className="mb-12">
-            <div className="relative w-40 h-40 mx-auto mb-8">
+            <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-8">
               {/* Multiple glow layers */}
               <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-full opacity-20 blur-xl animate-pulse"></div>
               <div className="absolute inset-2 bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-full opacity-40 blur-lg"></div>
               
               {/* Main celebration icon */}
               <div className="relative w-full h-full bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl border-4 border-white/30">
-                <span className="text-7xl animate-bounce" style={{ animationDuration: '2s' }}>🎉</span>
+                <span className="text-5xl sm:text-7xl animate-bounce" style={{ animationDuration: '2s' }}>🎉</span>
               </div>
               
               {/* Floating celebration elements */}
@@ -152,22 +152,22 @@ export function ProgressPage() {
               <div className="absolute -bottom-2 -left-2 text-2xl animate-bounce" style={{ animationDelay: '1s' }}>💫</div>
             </div>
             
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-300 via-blue-300 to-purple-300 bg-clip-text text-transparent mb-6">
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-emerald-300 via-blue-300 to-purple-300 bg-clip-text text-transparent mb-6">
               Great progress!
             </h1>
             
-            <p className="text-xl text-slate-200 font-medium mb-4">
+            <p className="text-lg sm:text-xl text-slate-200 font-medium mb-4">
               You&apos;re now tracking
             </p>
             
             {/* Enhanced service count display */}
             <div className="relative mb-6">
-              <div className="text-7xl font-black bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 bg-clip-text text-transparent mb-2 leading-none">
+              <div className="text-5xl sm:text-7xl font-black bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 bg-clip-text text-transparent mb-2 leading-none">
                 {selectedServiceDetails.length}
               </div>
               <div className="absolute -inset-4 bg-gradient-to-r from-emerald-400/20 to-green-400/20 rounded-2xl blur-lg"></div>
               
-              <p className="text-2xl text-slate-300 font-semibold">
+              <p className="text-xl sm:text-2xl text-slate-300 font-semibold">
                 {selectedServiceDetails.length === 1 ? 'service' : 'services'}
               </p>
             </div>

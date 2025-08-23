@@ -130,7 +130,7 @@ export function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 py-8 px-6 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 py-6 sm:py-8 px-4 sm:px-6 relative overflow-hidden">
       {/* Floating background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl"></div>
@@ -145,17 +145,17 @@ export function Dashboard() {
             <span className="text-sm font-medium text-slate-300">Your Dashboard</span>
           </div>
           
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4">
             Services Dashboard
           </h1>
-          <p className="text-xl text-slate-300 font-medium">
+          <p className="text-lg sm:text-xl text-slate-300 font-medium">
             Track your subscriptions and find savings
           </p>
         </div>
 
         {/* Enhanced Quick Stats */}
-        <div className="grid grid-cols-2 gap-6 mb-12">
-          <div className="group relative bg-slate-800/70 backdrop-blur-sm rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl border border-slate-600/40 transition-all duration-300 hover:scale-[1.02]">
+        <div className="grid grid-cols-2 gap-4 sm:gap-6 mb-12">
+          <div className="group relative bg-slate-800/70 backdrop-blur-sm rounded-3xl p-4 sm:p-8 text-center shadow-xl hover:shadow-2xl border border-slate-600/40 transition-all duration-300 hover:scale-[1.02]">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-3xl"></div>
             <div className="relative">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
@@ -168,7 +168,7 @@ export function Dashboard() {
             </div>
           </div>
           
-          <div className="group relative bg-slate-800/70 backdrop-blur-sm rounded-3xl p-8 text-center shadow-xl hover:shadow-2xl border border-slate-600/40 transition-all duration-300 hover:scale-[1.02]">
+          <div className="group relative bg-slate-800/70 backdrop-blur-sm rounded-3xl p-4 sm:p-8 text-center shadow-xl hover:shadow-2xl border border-slate-600/40 transition-all duration-300 hover:scale-[1.02]">
             <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-green-500/5 rounded-3xl"></div>
             <div className="relative">
               <div className="w-16 h-16 mx-auto mb-4 bg-gradient-to-br from-emerald-500 to-green-600 rounded-2xl flex items-center justify-center shadow-lg">

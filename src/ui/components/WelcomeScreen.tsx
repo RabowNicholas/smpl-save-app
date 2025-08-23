@@ -29,7 +29,7 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
             </div>
             
             {/* Enhanced typography */}
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-6 leading-tight">
+            <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-6 leading-tight">
               Organize all your subscriptions in one place
             </h1>
             
@@ -51,8 +51,8 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
         </button>
         
-        {/* Enhanced reassurance */}
-        <div className="flex items-center justify-center mt-6 space-x-4 text-sm text-slate-400">
+        {/* Enhanced reassurance - Mobile optimized */}
+        <div className="flex flex-wrap items-center justify-center mt-6 gap-3 text-sm text-slate-400">
           <div className="flex items-center">
             <span className="w-2 h-2 bg-green-400 rounded-full mr-2"></span>
             <span>2 minutes</span>

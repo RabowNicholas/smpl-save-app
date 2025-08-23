@@ -143,7 +143,7 @@ export function AuthPage({
                 </div>
               </div>
               
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-3">
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-3">
                 Secure Your Savings Journey
               </h1>
               <p className="text-slate-300 text-lg">
@@ -241,7 +241,7 @@ export function AuthPage({
               </div>
             </div>
             
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4">
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4">
               Enter your verification code
             </h1>
             

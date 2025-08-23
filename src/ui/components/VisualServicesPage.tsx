@@ -208,10 +208,10 @@ export function VisualServicesPage() {
             <span className="text-sm font-medium text-slate-300">Step 2 of 3</span>
           </div>
           
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4 leading-tight">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4 leading-tight">
             Which services do you pay for?
           </h1>
-          <p className="text-xl text-slate-300 font-medium">
+          <p className="text-lg sm:text-xl text-slate-300 font-medium">
             {servicesLoading ? (
               <span className="flex items-center justify-center">
                 <div className="animate-spin w-5 h-5 border-2 border-blue-300 border-t-transparent rounded-full mr-2"></div>
@@ -236,7 +236,7 @@ export function VisualServicesPage() {
                 disabled={servicesLoading}
                 style={{ animationDelay: `${index * 50}ms` }}
                 className={`
-                  group relative p-7 rounded-3xl transition-all duration-500 transform hover:scale-105 active:scale-95 animate-in fade-in slide-in-from-bottom-4
+                  group relative p-5 sm:p-7 rounded-3xl transition-all duration-500 transform hover:scale-105 active:scale-95 animate-in fade-in slide-in-from-bottom-4
                   ${servicesLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                   ${selected 
                     ? 'bg-gradient-to-br from-blue-500 via-purple-500 to-blue-600 text-white shadow-2xl shadow-blue-500/25' 
@@ -283,7 +283,7 @@ export function VisualServicesPage() {
 
         {/* Enhanced floating continue button */}
         {localSelectedServices.length > 0 && (
-          <div className="fixed bottom-8 left-6 right-6 text-center z-50">
+          <div className="fixed bottom-4 sm:bottom-8 left-4 right-4 sm:left-6 sm:right-6 text-center z-50">
             <div className="max-w-sm mx-auto">
               {/* Selection count indicator */}
               <div className="mb-3 inline-flex items-center bg-slate-800/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg border border-slate-700/50">
