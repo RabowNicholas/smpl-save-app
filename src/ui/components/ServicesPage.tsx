@@ -36,11 +36,19 @@ export function ServicesPage() {
     
     try {
       const response = await fetch(`/api/services/${selectedCategory.id}`)
-      const result = await response.json()
       
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to load services')
+        let errorMessage = 'Failed to load services'
+        try {
+          const errorResult = await response.json()
+          errorMessage = errorResult.error || errorMessage
+        } catch {
+          // If JSON parsing fails, use default error message
+        }
+        throw new Error(errorMessage)
       }
+      
+      const result = await response.json()
       
       dispatch({ type: 'SET_SERVICES', payload: result.services })
     } catch (error) {
@@ -56,9 +64,9 @@ export function ServicesPage() {
     
     try {
       const response = await fetch(`/api/user-services?userId=${user.id}`)
-      const result = await response.json()
       
       if (response.ok) {
+        const result = await response.json()
         dispatch({ type: 'SET_USER_SERVICES', payload: result.userServices })
       }
     } catch (error) {
@@ -81,8 +89,14 @@ export function ServicesPage() {
         })
         
         if (!response.ok) {
-          const result = await response.json()
-          throw new Error(result.error || 'Failed to save service')
+          let errorMessage = 'Failed to save service'
+          try {
+            const result = await response.json()
+            errorMessage = result.error || errorMessage
+          } catch {
+            // If JSON parsing fails, use default error message
+          }
+          throw new Error(errorMessage)
         }
       } else {
         // Remove service
@@ -91,8 +105,14 @@ export function ServicesPage() {
         })
         
         if (!response.ok) {
-          const result = await response.json()
-          throw new Error(result.error || 'Failed to remove service')
+          let errorMessage = 'Failed to remove service'
+          try {
+            const result = await response.json()
+            errorMessage = result.error || errorMessage
+          } catch {
+            // If JSON parsing fails, use default error message
+          }
+          throw new Error(errorMessage)
         }
       }
       

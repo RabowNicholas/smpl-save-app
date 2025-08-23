@@ -19,11 +19,19 @@ export function CategoriesPage() {
     
     try {
       const response = await fetch('/api/categories')
-      const result = await response.json()
       
       if (!response.ok) {
-        throw new Error(result.error || 'Failed to load categories')
+        let errorMessage = 'Failed to load categories'
+        try {
+          const errorResult = await response.json()
+          errorMessage = errorResult.error || errorMessage
+        } catch {
+          // If JSON parsing fails, use default error message
+        }
+        throw new Error(errorMessage)
       }
+      
+      const result = await response.json()
       
       dispatch({ type: 'SET_CATEGORIES', payload: result.categories })
     } catch (error) {
@@ -45,12 +53,29 @@ export function CategoriesPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center py-12">
-        <div 
-          className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"
-          data-testid="loading-spinner"
-        />
-        <p className="text-gray-600">Loading categories...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Floating background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-green-400/10 to-blue-500/10 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-sm mx-auto text-center relative z-10">
+          <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50">
+            <div className="relative mb-8">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div 
+                  className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent"
+                  data-testid="loading-spinner"
+                />
+              </div>
+              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-200 to-slate-200 bg-clip-text text-transparent mb-2">
+                Loading categories...
+              </h3>
+              <p className="text-slate-300">Preparing your options</p>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }

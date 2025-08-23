@@ -24,6 +24,7 @@ export type AppAction =
   | { type: 'SET_CATEGORIES'; payload: Category[] }
   | { type: 'SET_SERVICES'; payload: Service[] }
   | { type: 'SET_USER_SERVICES'; payload: UserService[] }
+  | { type: 'SET_SELECTED_SERVICES'; payload: string[] }
   | { type: 'TOGGLE_SERVICE'; payload: string }
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
@@ -65,6 +66,9 @@ function appReducer(state: AppState, action: AppAction): AppState {
         userServices: action.payload,
         selectedServices: serviceIds
       }
+    
+    case 'SET_SELECTED_SERVICES':
+      return { ...state, selectedServices: action.payload }
     
     case 'TOGGLE_SERVICE':
       const serviceId = action.payload

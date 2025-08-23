@@ -25,11 +25,20 @@ export function ProgressPage() {
       } else {
         // Otherwise fetch all services and filter
         // This handles the case where user navigates directly to progress
-        const allCategories = await fetch('/api/categories').then(r => r.json())
+        const categoriesResponse = await fetch('/api/categories')
+        if (!categoriesResponse.ok) {
+          throw new Error(`Failed to fetch categories: ${categoriesResponse.status} ${categoriesResponse.statusText}`)
+        }
+        const allCategories = await categoriesResponse.json()
         const allServices: Service[] = []
         
         for (const category of allCategories.categories) {
-          const categoryServices = await fetch(`/api/services/${category.id}`).then(r => r.json())
+          const servicesResponse = await fetch(`/api/services/${category.id}`)
+          if (!servicesResponse.ok) {
+            console.error(`Failed to fetch services for category ${category.id}: ${servicesResponse.status} ${servicesResponse.statusText}`)
+            continue // Skip this category instead of failing entirely
+          }
+          const categoryServices = await servicesResponse.json()
           allServices.push(...categoryServices.services)
         }
         
@@ -59,13 +68,28 @@ export function ProgressPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="flex flex-col items-center">
-          <div 
-            className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mb-4"
-            data-testid="loading-spinner"
-          />
-          <p className="text-gray-600">Loading your services...</p>
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Floating background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-emerald-400/20 to-blue-600/20 rounded-full blur-3xl"></div>
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-green-400/20 to-purple-500/20 rounded-full blur-3xl"></div>
+        </div>
+        
+        <div className="max-w-sm mx-auto text-center relative z-10">
+          <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50">
+            <div className="relative mb-8">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
+                <div 
+                  className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent"
+                  data-testid="loading-spinner"
+                />
+              </div>
+              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-200 to-slate-200 bg-clip-text text-transparent mb-2">
+                Loading your services...
+              </h3>
+              <p className="text-slate-300">Just a moment</p>
+            </div>
+          </div>
         </div>
       </div>
     )
@@ -92,110 +116,118 @@ export function ProgressPage() {
     )
   }
 
-  // Calculate estimated costs and savings
-  const getServiceCost = (serviceName: string) => {
-    const costs: Record<string, number> = {
-      'Netflix': 15.49,
-      'Disney+': 7.99,
-      'Hulu': 7.99,
-      'Amazon Prime Video': 8.99,
-      'HBO Max': 14.99,
-      'Walmart': 98,
-      'Target': 45,
-      'Amazon Fresh': 67,
-      'Costco': 120,
-      'Verizon': 80,
-      'AT&T': 75,
-      'T-Mobile': 70,
-      'Comcast Xfinity': 89,
-      'DoorDash': 9.99,
-      'Uber Eats': 12.99,
-      'Grubhub': 9.99,
-      'Uber': 25,
-      'Lyft': 23,
-      'Enterprise Rent-A-Car': 45
-    }
-    return costs[serviceName] || 19.99
-  }
-
-  const totalMonthlyCost = selectedServiceDetails.reduce((sum, service) => 
-    sum + getServiceCost(service.name), 0
-  )
-
-  const potentialSavings = Math.round(totalMonthlyCost * 0.23) // 23% average savings
-
-  const getSavingTip = (serviceName: string) => {
-    const tips: Record<string, string> = {
-      'Netflix': 'Share with family or downgrade plan',
-      'Disney+': 'Bundle with Hulu for better value',
-      'Hulu': 'Consider ad-supported tier',
-      'Amazon Prime Video': 'Use annual billing for discount',
-      'HBO Max': 'Cancel between show seasons',
-      'Walmart': 'Compare with local stores',
-      'Target': 'Use RedCard for 5% discount',
-      'Amazon Fresh': 'Consider pickup orders',
-      'Costco': 'Calculate if membership pays off',
-      'Verizon': 'Negotiate or switch carriers',
-      'AT&T': 'Check for better plan options',
-      'T-Mobile': 'Look for promotional rates',
-      'Comcast Xfinity': 'Negotiate retention rates',
-      'DoorDash': 'Use pickup instead of delivery',
-      'Uber Eats': 'Look for subscription discounts',
-      'Grubhub': 'Compare delivery fees',
-      'Uber': 'Use during off-peak hours',
-      'Lyft': 'Consider bike/scooter options',
-      'Enterprise Rent-A-Car': 'Book in advance for better rates'
-    }
-    return tips[serviceName] || 'Look for promotional rates'
-  }
+  // Focus on service organization and tracking
 
   return (
-    <div className="min-h-screen bg-white flex items-center justify-center px-6">
-      <div className="max-w-sm mx-auto text-center">
-        {/* Beautiful, focused celebration */}
-        <div className="mb-12">
-          <div className="w-32 h-32 mx-auto mb-8 bg-gradient-to-br from-green-400 to-blue-500 rounded-full flex items-center justify-center shadow-2xl">
-            <span className="text-5xl">💰</span>
-          </div>
-          
-          <h1 className="text-2xl font-semibold text-gray-900 mb-4">
-            You could save
-          </h1>
-          
-          {/* One big, beautiful number */}
-          <div className="text-6xl font-bold text-green-500 mb-2">
-            ${potentialSavings}
-          </div>
-          <p className="text-lg text-gray-600 mb-4">
-            every month
-          </p>
-          
-          <p className="text-gray-500 mb-6">
-            Based on {selectedServiceDetails.length} services worth ${totalMonthlyCost.toFixed(0)}/month
-          </p>
-          
-          {/* Partnership message */}
-          <div className="bg-blue-50 rounded-xl p-4 mb-4">
-            <p className="text-sm text-blue-800 leading-relaxed">
-              💡 <strong>Savings coming soon!</strong> We&apos;re building partnerships to get you group deals and exclusive discounts. Thank you for helping us understand your needs.
+    <div className="min-h-screen bg-gradient-to-br from-emerald-900 via-blue-900 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+      {/* Celebration particle effects */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-400 rounded-full animate-ping" style={{ animationDelay: '0s' }}></div>
+        <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-emerald-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-blue-400 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+        
+        {/* Floating background gradients */}
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-emerald-400/20 to-blue-600/20 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-green-400/20 to-purple-500/20 rounded-full blur-3xl"></div>
+      </div>
+      
+      <div className="max-w-lg mx-auto text-center relative z-10">
+        {/* Glassmorphic celebration container */}
+        <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50 mb-8">
+          {/* Enhanced celebration visual */}
+          <div className="mb-12">
+            <div className="relative w-40 h-40 mx-auto mb-8">
+              {/* Multiple glow layers */}
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-full opacity-20 blur-xl animate-pulse"></div>
+              <div className="absolute inset-2 bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-full opacity-40 blur-lg"></div>
+              
+              {/* Main celebration icon */}
+              <div className="relative w-full h-full bg-gradient-to-br from-emerald-400 via-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl border-4 border-white/30">
+                <span className="text-7xl animate-bounce" style={{ animationDuration: '2s' }}>🎉</span>
+              </div>
+              
+              {/* Floating celebration elements */}
+              <div className="absolute -top-2 -right-2 text-2xl animate-bounce" style={{ animationDelay: '0.5s' }}>✨</div>
+              <div className="absolute -bottom-2 -left-2 text-2xl animate-bounce" style={{ animationDelay: '1s' }}>💫</div>
+            </div>
+            
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-emerald-300 via-blue-300 to-purple-300 bg-clip-text text-transparent mb-6">
+              Great progress!
+            </h1>
+            
+            <p className="text-xl text-slate-200 font-medium mb-4">
+              You&apos;re now tracking
             </p>
+            
+            {/* Enhanced service count display */}
+            <div className="relative mb-6">
+              <div className="text-7xl font-black bg-gradient-to-r from-emerald-500 via-green-500 to-emerald-600 bg-clip-text text-transparent mb-2 leading-none">
+                {selectedServiceDetails.length}
+              </div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-emerald-400/20 to-green-400/20 rounded-2xl blur-lg"></div>
+              
+              <p className="text-2xl text-slate-300 font-semibold">
+                {selectedServiceDetails.length === 1 ? 'service' : 'services'}
+              </p>
+            </div>
+            
+            <div className="bg-gradient-to-r from-slate-800/50 to-blue-900/50 rounded-2xl p-4 mb-6 border border-slate-700/50">
+              <p className="text-slate-300 font-medium">
+                You&apos;ve organized{' '}
+                <span className="font-bold text-slate-100">{selectedServiceDetails.length} subscription{selectedServiceDetails.length !== 1 ? 's' : ''}</span>
+                {' '}in one place!
+              </p>
+            </div>
+            
+            {/* Enhanced partnership message */}
+            <div className="bg-gradient-to-r from-blue-900/50 via-purple-900/50 to-blue-900/50 rounded-2xl p-6 border border-blue-700/50 shadow-lg">
+              <div className="flex items-start space-x-3">
+                <div className="flex-shrink-0">
+                  <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center text-white text-lg">
+                    💡
+                  </div>
+                </div>
+                <div className="text-left">
+                  <h3 className="font-bold text-blue-200 mb-3">Group pricing coming soon!</h3>
+                  <p className="text-sm text-blue-100 leading-relaxed mb-3">
+                    We&apos;re building partnerships to get you group deals and exclusive discounts on your subscriptions.
+                  </p>
+                  <p className="text-sm text-purple-200 font-medium">
+                    Thank you for joining the smpl life! ✨
+                  </p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* One clear action */}
+        {/* Enhanced action buttons */}
         <div className="space-y-4">
           <button
             onClick={handleBackToServices}
-            className="w-full bg-blue-500 hover:bg-blue-600 text-white text-lg font-medium py-4 rounded-2xl transition-colors duration-200 shadow-lg"
+            className="group relative w-full bg-gradient-to-r from-blue-500 via-purple-500 to-blue-600 hover:from-blue-600 hover:via-purple-600 hover:to-blue-700 text-white text-xl font-semibold py-5 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98]"
           >
-            Add More Services
+            <span className="relative z-10 flex items-center justify-center">
+              Add More Services
+              <svg className="w-5 h-5 ml-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </span>
+            {/* Button glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
           </button>
           
           <button
             onClick={handleViewDashboard}
-            className="w-full text-blue-600 text-lg py-3 hover:text-blue-700 transition-colors"
+            className="group w-full bg-slate-700/70 backdrop-blur-sm hover:bg-slate-700/90 text-slate-200 hover:text-white text-lg font-medium py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl border border-slate-600/40 transform hover:scale-[1.01] active:scale-[0.99]"
           >
-            View My Dashboard
+            <span className="flex items-center justify-center">
+              View My Dashboard
+              <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </span>
           </button>
         </div>
       </div>
