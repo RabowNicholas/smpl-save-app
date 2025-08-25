@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { useApp } from '@/ui/context/AppContext'
 import { Service } from '@/core/types'
 import { ConfirmModal, NotificationModal } from './Modal'
-import { LoadingState, LoadingSpinner } from './LoadingSpinner'
+import { LoadingSpinner } from './LoadingSpinner'
 
 // Enhanced service branding with better icons and brand colors
 const SERVICE_VISUAL_MAP: Record<string, { icon: string; brandColor: string }> = {
@@ -99,9 +99,7 @@ export function Dashboard() {
     dispatch({ type: 'SET_STEP', payload: 'visual-services' })
   }
 
-  const handleViewSavings = () => {
-    dispatch({ type: 'SET_STEP', payload: 'progress' })
-  }
+  // Removed unused handleViewSavings function
 
   const handleRemoveServiceClick = (serviceId: string) => {
     setServiceToRemove(serviceId)
@@ -400,7 +398,7 @@ export function Dashboard() {
         <div className="mb-8 bg-gradient-to-r from-red-900/20 via-orange-900/20 to-red-900/20 rounded-2xl p-6 border border-red-700/30">
           <div className="text-center">
             <div className="text-3xl mb-3">🚀</div>
-            <h3 className="text-lg font-bold text-orange-200 mb-3">Grow Our Community, Increase Everyone's Savings</h3>
+            <h3 className="text-lg font-bold text-orange-200 mb-3">Grow Our Community, Increase Everyone&apos;s Savings</h3>
             
             {/* Urgency messaging */}
             <div className="bg-slate-800/40 rounded-lg p-4 mb-4">
@@ -446,7 +444,7 @@ export function Dashboard() {
             </div>
             
             <p className="text-sm text-slate-200 leading-relaxed">
-              Every friend you invite increases <span className="font-semibold text-orange-200">everyone's</span> savings potential. Together we save more!
+              Every friend you invite increases <span className="font-semibold text-orange-200">everyone&apos;s</span> savings potential. Together we save more!
             </p>
           </div>
         </div>

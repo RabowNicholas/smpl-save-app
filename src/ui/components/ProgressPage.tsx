@@ -8,7 +8,7 @@ import { ProgressIndicator } from './ProgressIndicator'
 
 export function ProgressPage() {
   const { state, dispatch } = useApp()
-  const { user, selectedServices, services } = state
+  const { selectedServices, services } = state
   const [selectedServiceDetails, setSelectedServiceDetails] = useState<Service[]>([])
   const [loading, setLoading] = useState(true)
   const [showShareNotification, setShowShareNotification] = useState(false)

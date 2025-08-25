@@ -6,7 +6,7 @@ interface ProgressIndicatorProps {
   steps: string[]
 }
 
-export function ProgressIndicator({ currentStep, totalSteps, steps }: ProgressIndicatorProps) {
+export function ProgressIndicator({ currentStep, steps }: ProgressIndicatorProps) {
   return (
     <div className="w-full max-w-2xl mx-auto mb-8">
       {/* Progress Bar */}

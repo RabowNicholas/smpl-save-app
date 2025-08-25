@@ -43,14 +43,14 @@ const SERVICE_VISUAL_MAP: Record<string, { icon: string; brandColor: string }> =
 
 export function VisualServicesPage() {
   const { state, dispatch } = useApp()
-  const { user, selectedServices, loading } = state
+  const { user, selectedServices } = state
   const [localSelectedServices, setLocalSelectedServices] = useState<string[]>(selectedServices)
   const [savingChanges, setSavingChanges] = useState(false)
   const [allServices, setAllServices] = useState<Service[]>([])
   const [servicesLoading, setServicesLoading] = useState(true)
-  const [popularServices, setPopularServices] = useState<Service[]>([])
+  // Removed unused popularServices state
   const [servicesByCategory, setServicesByCategory] = useState<Record<string, Service[]>>({})
-  const [categories, setCategories] = useState<any[]>([])
+  const [categories, setCategories] = useState<Array<{id: string, name: string, icon: string}>>([])
   const [customServices, setCustomServices] = useState<Record<string, string>>({})
   const [showOtherInputs, setShowOtherInputs] = useState<Record<string, boolean>>({})
   const [logoErrors, setLogoErrors] = useState<Record<string, boolean>>({})
@@ -104,11 +104,11 @@ export function VisualServicesPage() {
       setAllServices(allServices)
       
       // Create prioritized list of popular services from database
-      const popular = getPrioritizedServices(allServices)
-      setPopularServices(popular)
+      // Note: popular services functionality available but not currently used
+      // const popular = getPrioritizedServices(allServices)
       
       // Group services by category for organized display
-      const grouped = categoriesResult.categories.reduce((acc: Record<string, Service[]>, category: any) => {
+      const grouped = categoriesResult.categories.reduce((acc: Record<string, Service[]>, category: {id: string, name: string, icon: string}) => {
         const categoryServices = allServices.filter(service => service.categoryId === category.id)
         acc[category.id] = categoryServices
         return acc
@@ -122,42 +122,8 @@ export function VisualServicesPage() {
     }
   }
 
-  const getPrioritizedServices = (services: Service[]): Service[] => {
-    // Define priority order based on popularity/recognition
-    const priorityNames = [
-      // Most recognizable streaming services first
-      'Netflix', 'Disney+', 'Hulu', 'Amazon Prime Video', 'HBO Max',
-      // Popular groceries/shopping
-      'Walmart', 'Target', 'Amazon Fresh', 'Costco',
-      // Common utilities
-      'Verizon', 'AT&T', 'T-Mobile', 'Comcast Xfinity',
-      // Food delivery
-      'DoorDash', 'Uber Eats', 'Grubhub',
-      // Transportation
-      'Uber', 'Lyft', 'Enterprise Rent-A-Car'
-    ]
-    
-    const prioritized: Service[] = []
-    const remaining: Service[] = []
-    
-    // First, add services in priority order
-    priorityNames.forEach(name => {
-      const service = services.find(s => s.name === name)
-      if (service) {
-        prioritized.push(service)
-      }
-    })
-    
-    // Then add any remaining services that have visual mappings
-    services.forEach(service => {
-      if (!prioritized.find(p => p.id === service.id) && SERVICE_VISUAL_MAP[service.name]) {
-        remaining.push(service)
-      }
-    })
-    
-    // Limit to top 20 most popular services for clean UI
-    return [...prioritized, ...remaining].slice(0, 20)
-  }
+  // getPrioritizedServices function available for future use if needed
+  // Currently unused but kept for potential popular services feature
 
   const handleServiceToggle = (serviceName: string) => {
     // Prevent clicks while services are loading

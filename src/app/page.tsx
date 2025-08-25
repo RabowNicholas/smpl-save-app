@@ -40,7 +40,7 @@ export default function Home() {
         throw new Error(errorMessage)
       }
       
-      const result = await response.json()
+      await response.json()
       
       setPhoneNumber(phone)
       setStep('code')
@@ -204,7 +204,7 @@ function MainApp() {
 
 function AppContent() {
   const { state, dispatch } = useApp()
-  const { currentStep, user } = state
+  const { currentStep } = state
   const [isLoadingUserData, setIsLoadingUserData] = useState(true)
 
   // Load user and their services from localStorage and API

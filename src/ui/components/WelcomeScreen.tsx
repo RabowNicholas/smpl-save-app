@@ -48,7 +48,7 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
                 <div className="text-2xl">🤝</div>
                 <div className="text-left">
                   <p className="text-sm text-red-100 font-medium mb-2">
-                    <span className="font-bold text-orange-200">Together we have power</span> companies can't ignore.
+                    <span className="font-bold text-orange-200">Together we have power</span> companies can&apos;t ignore.
                   </p>
                   <p className="text-sm text-orange-200 font-bold">
                     <span className="text-red-200">Join our community.</span> Save more together.
