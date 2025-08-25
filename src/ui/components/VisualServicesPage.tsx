@@ -3,40 +3,42 @@
 import { useState, useEffect } from 'react'
 import { useApp } from '@/ui/context/AppContext'
 import { Service } from '@/core/types'
+import { InlineLoading, ButtonLoading } from './LoadingSpinner'
+import { ProgressIndicator } from './ProgressIndicator'
 
-// Icon and color mapping for services - database is source of truth for names
-const SERVICE_VISUAL_MAP: Record<string, { icon: string; color: string }> = {
-  // Streaming
-  'Netflix': { icon: '🎬', color: 'bg-red-500' },
-  'Disney+': { icon: '🏰', color: 'bg-blue-600' },
-  'Hulu': { icon: '📱', color: 'bg-green-400' },
-  'Amazon Prime Video': { icon: '📺', color: 'bg-blue-600' },
-  'HBO Max': { icon: '👑', color: 'bg-purple-600' },
-  'Spotify': { icon: '🎵', color: 'bg-green-500' },
-  'Apple Music': { icon: '🎵', color: 'bg-gray-800' },
-  'YouTube Premium': { icon: '📺', color: 'bg-red-600' },
+// Enhanced service branding with better icons and brand colors
+const SERVICE_VISUAL_MAP: Record<string, { icon: string; brandColor: string }> = {
+  // Streaming & Entertainment
+  'Netflix': { icon: 'N', brandColor: '#E50914' },
+  'Disney+': { icon: 'D+', brandColor: '#113CCF' }, 
+  'Hulu': { icon: 'hulu', brandColor: '#1CE783' },
+  'Amazon Prime Video': { icon: '▶', brandColor: '#00A8E1' },
+  'HBO Max': { icon: 'HBO', brandColor: '#8B5CF6' },
+  'Spotify': { icon: '♪', brandColor: '#1DB954' },
+  'Apple Music': { icon: '♪', brandColor: '#FA243C' },
+  'YouTube Premium': { icon: '▷', brandColor: '#FF0000' },
   
   // Groceries  
-  'Walmart': { icon: '🛒', color: 'bg-blue-600' },
-  'Target': { icon: '🎯', color: 'bg-red-500' },
-  'Amazon Fresh': { icon: '📦', color: 'bg-orange-500' },
-  'Costco': { icon: '🏪', color: 'bg-blue-700' },
+  'Walmart': { icon: 'W', brandColor: '#004C91' },
+  'Target': { icon: '◉', brandColor: '#CC0000' },
+  'Amazon Fresh': { icon: 'A', brandColor: '#FF9900' },
+  'Costco': { icon: 'C', brandColor: '#00539C' },
   
-  // Utilities
-  'Verizon': { icon: '📱', color: 'bg-red-500' },
-  'AT&T': { icon: '📡', color: 'bg-blue-500' },
-  'T-Mobile': { icon: '📱', color: 'bg-pink-500' },
-  'Comcast Xfinity': { icon: '🌐', color: 'bg-purple-600' },
+  // Internet / Phone Provider
+  'Verizon': { icon: 'V', brandColor: '#CD040B' },
+  'AT&T': { icon: 'AT&T', brandColor: '#00A8E0' },
+  'T-Mobile': { icon: 'T', brandColor: '#E20074' },
+  'Comcast Xfinity': { icon: 'X', brandColor: '#7B3F98' },
   
   // Food Delivery
-  'DoorDash': { icon: '🚗', color: 'bg-red-500' },
-  'Uber Eats': { icon: '🍔', color: 'bg-green-500' },
-  'Grubhub': { icon: '🥡', color: 'bg-orange-500' },
+  'DoorDash': { icon: 'DD', brandColor: '#FF3008' },
+  'Uber Eats': { icon: 'UE', brandColor: '#06C167' },
+  'Grubhub': { icon: 'GH', brandColor: '#FF8000' },
   
   // Transportation
-  'Uber': { icon: '🚗', color: 'bg-black' },
-  'Lyft': { icon: '🚕', color: 'bg-pink-500' },
-  'Enterprise Rent-A-Car': { icon: '🚙', color: 'bg-green-600' },
+  'Uber': { icon: 'U', brandColor: '#000000' },
+  'Lyft': { icon: 'L', brandColor: '#FF00BF' },
+  'Enterprise Rent-A-Car': { icon: 'E', brandColor: '#00A651' },
 }
 
 export function VisualServicesPage() {
@@ -47,10 +49,35 @@ export function VisualServicesPage() {
   const [allServices, setAllServices] = useState<Service[]>([])
   const [servicesLoading, setServicesLoading] = useState(true)
   const [popularServices, setPopularServices] = useState<Service[]>([])
+  const [servicesByCategory, setServicesByCategory] = useState<Record<string, Service[]>>({})
+  const [categories, setCategories] = useState<any[]>([])
+  const [customServices, setCustomServices] = useState<Record<string, string>>({})
+  const [showOtherInputs, setShowOtherInputs] = useState<Record<string, boolean>>({})
+  const [logoErrors, setLogoErrors] = useState<Record<string, boolean>>({})
+  const [searchQuery, setSearchQuery] = useState('')
+  const [filteredServicesByCategory, setFilteredServicesByCategory] = useState<Record<string, Service[]>>({})
 
   useEffect(() => {
     loadAllServices()
   }, [])
+
+  // Filter services based on search query
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredServicesByCategory(servicesByCategory)
+    } else {
+      const filtered: Record<string, Service[]> = {}
+      Object.entries(servicesByCategory).forEach(([categoryId, services]) => {
+        const filteredServices = services.filter(service => 
+          service.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        if (filteredServices.length > 0) {
+          filtered[categoryId] = filteredServices
+        }
+      })
+      setFilteredServicesByCategory(filtered)
+    }
+  }, [searchQuery, servicesByCategory])
 
   const loadAllServices = async () => {
     setServicesLoading(true)
@@ -61,6 +88,7 @@ export function VisualServicesPage() {
         throw new Error(`Failed to fetch categories: ${categoriesResponse.status} ${categoriesResponse.statusText}`)
       }
       const categoriesResult = await categoriesResponse.json()
+      setCategories(categoriesResult.categories)
       
       const allServices: Service[] = []
       for (const category of categoriesResult.categories) {
@@ -78,6 +106,14 @@ export function VisualServicesPage() {
       // Create prioritized list of popular services from database
       const popular = getPrioritizedServices(allServices)
       setPopularServices(popular)
+      
+      // Group services by category for organized display
+      const grouped = categoriesResult.categories.reduce((acc: Record<string, Service[]>, category: any) => {
+        const categoryServices = allServices.filter(service => service.categoryId === category.id)
+        acc[category.id] = categoryServices
+        return acc
+      }, {})
+      setServicesByCategory(grouped)
       
     } catch (error) {
       console.error('Failed to load services:', error)
@@ -192,90 +228,311 @@ export function VisualServicesPage() {
     return service ? localSelectedServices.includes(service.id) : false
   }
 
+  const handleCustomServiceAdd = (categoryId: string, serviceName: string) => {
+    if (!serviceName.trim()) return
+    
+    // Create a temporary service ID for custom services
+    const customServiceId = `custom-${categoryId}-${Date.now()}`
+    
+    // Add to local selected services
+    setLocalSelectedServices(prev => [...prev, customServiceId])
+    
+    // Store custom service info
+    setCustomServices(prev => ({
+      ...prev,
+      [customServiceId]: serviceName.trim()
+    }))
+    
+    // Hide the input and clear it
+    setShowOtherInputs(prev => ({ ...prev, [categoryId]: false }))
+  }
+
+  const handleOtherInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, categoryId: string) => {
+    if (e.key === 'Enter') {
+      const input = e.currentTarget
+      handleCustomServiceAdd(categoryId, input.value)
+      input.value = ''
+    }
+  }
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 py-12 px-6 relative overflow-hidden">
-      {/* Floating background elements */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black py-12 px-6 relative overflow-hidden">
+      {/* Rebel floating background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-green-400/10 to-blue-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
       </div>
       
       <div className="max-w-4xl mx-auto relative z-10">
+        {/* SMPL Logo */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+            smpl
+          </h1>
+        </div>
+        
+        {/* Progress indicator */}
+        <ProgressIndicator 
+          currentStep={2}
+          totalSteps={3}
+          steps={['Sign Up', 'Select Services', 'Track & Save']}
+        />
+        
         {/* Enhanced header */}
         <div className="text-center mb-16">
-          <div className="inline-flex items-center bg-slate-800/80 backdrop-blur-sm rounded-2xl px-6 py-3 shadow-lg border border-slate-700/50 mb-6">
-            <span className="text-2xl mr-3">🎯</span>
-            <span className="text-sm font-medium text-slate-300">Step 2 of 3</span>
-          </div>
           
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4 leading-tight">
-            Which services do you pay for?
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-4 leading-tight">
+            Group discounts on insurance, internet, phones & more
           </h1>
-          <p className="text-lg sm:text-xl text-slate-300 font-medium">
+          <p className="text-orange-200 text-lg font-medium mb-4">
+            Save together
+          </p>
+          <p className="text-lg sm:text-xl text-slate-200 font-medium">
             {servicesLoading ? (
-              <span className="flex items-center justify-center">
-                <div className="animate-spin w-5 h-5 border-2 border-blue-300 border-t-transparent rounded-full mr-2"></div>
-                <span className="text-slate-300">Loading services...</span>
-              </span>
+              <InlineLoading message="Loading your services..." size="md" color="orange" />
             ) : (
-              'Tap the ones you recognize'
+              'Select the services you use'
             )}
           </p>
         </div>
 
-        {/* Enhanced visual service grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mb-12">
-          {popularServices.map((service, index) => {
-            const selected = isServiceSelected(service.name)
-            const visualData = SERVICE_VISUAL_MAP[service.name] || { icon: '📋', color: 'bg-gradient-to-br from-gray-400 to-gray-500' }
+        {/* Search functionality - only show when not loading */}
+        {!servicesLoading && (
+          <div className="max-w-md mx-auto mb-12">
+            <div className="relative">
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search services..."
+                className="w-full px-6 py-4 bg-slate-800/70 border border-slate-600/40 rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400/50 transition-all duration-300 pr-12"
+              />
+              <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-300">
+                {searchQuery ? (
+                  <button
+                    onClick={() => setSearchQuery('')}
+                    className="hover:text-slate-300 transition-colors duration-200 p-2"
+                    style={{ minWidth: '44px', minHeight: '44px' }}
+                  >
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                ) : (
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                )}
+              </div>
+            </div>
+            {searchQuery && (
+              <div className="mt-2 text-center">
+                <span className="text-sm text-slate-300">
+                  {Object.values(filteredServicesByCategory).flat().length} service{Object.values(filteredServicesByCategory).flat().length !== 1 ? 's' : ''} found
+                </span>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Category-based service organization */}
+        <div className="space-y-8 mb-12">
+          {Object.entries(filteredServicesByCategory).map(([categoryId, services]) => {
+            const category = categories.find(cat => cat.id === categoryId)
+            const categoryName = category?.name || 'Services'
+            const categoryEmoji = category?.icon || '📋'
             
             return (
-              <button
-                key={service.id}
-                onClick={() => handleServiceToggle(service.name)}
-                disabled={servicesLoading}
-                style={{ animationDelay: `${index * 50}ms` }}
-                className={`
-                  group relative p-5 sm:p-7 rounded-3xl transition-all duration-500 transform hover:scale-105 active:scale-95 animate-in fade-in slide-in-from-bottom-4
-                  ${servicesLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
-                  ${selected 
-                    ? 'bg-gradient-to-br from-blue-500 via-purple-500 to-blue-600 text-white shadow-2xl shadow-blue-500/25' 
-                    : 'bg-slate-800/70 backdrop-blur-sm text-slate-200 shadow-xl hover:shadow-2xl border border-slate-600/40 hover:bg-slate-700/80'
-                  }
-                `}
-              >
-                {/* Selection glow effect */}
-                {selected && (
-                  <div className="absolute -inset-1 bg-gradient-to-r from-blue-400 via-purple-400 to-blue-500 rounded-3xl blur-lg opacity-30"></div>
-                )}
-                
-                <div className="relative text-center">
-                  <div className={`
-                    w-18 h-18 mx-auto mb-4 rounded-2xl flex items-center justify-center text-3xl transition-all duration-300 group-hover:scale-110
-                    ${selected 
-                      ? 'bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg' 
-                      : `${visualData.color} shadow-lg`
-                    }
-                  `}>
-                    <span className="filter drop-shadow-sm">{visualData.icon}</span>
+              <div key={categoryId} className="animate-in fade-in slide-in-from-bottom-4">
+                {/* Category Header */}
+                <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-12 h-12 bg-gradient-to-br from-slate-700 to-slate-800 rounded-2xl flex items-center justify-center shadow-lg">
+                      <span className="text-2xl">{categoryEmoji}</span>
+                    </div>
+                    <div>
+                      <h3 className="text-xl font-bold text-slate-200">{categoryName}</h3>
+                      <p className="text-sm text-slate-300">Select your {categoryName.toLowerCase()} services</p>
+                    </div>
                   </div>
                   
-                  <h3 className={`font-semibold text-sm leading-tight transition-colors duration-300 ${
-                    selected ? 'text-white' : 'text-slate-200 group-hover:text-white'
-                  }`}>
-                    {service.name}
-                  </h3>
-                  
-                  {/* Selection indicator */}
-                  {selected && (
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-white rounded-full flex items-center justify-center shadow-lg">
-                      <svg className="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                  )}
+                  {/* Other Service Button */}
+                  <button
+                    onClick={() => setShowOtherInputs(prev => ({ ...prev, [categoryId]: !prev[categoryId] }))}
+                    className="group flex items-center space-x-2 px-4 py-3 bg-slate-700/70 hover:bg-slate-600/70 text-slate-300 hover:text-white text-sm font-medium rounded-xl transition-all duration-300 border border-slate-600/40"
+                    style={{ minHeight: '44px' }}
+                  >
+                    <svg className="w-4 h-4 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+                    </svg>
+                    <span>Other</span>
+                  </button>
                 </div>
-              </button>
+                
+                {/* Other Service Input */}
+                {showOtherInputs[categoryId] && (
+                  <div className="mb-6">
+                    <div className="flex gap-3">
+                      <input
+                        type="text"
+                        placeholder={`Add a ${categoryName.toLowerCase()} service...`}
+                        onKeyPress={(e) => handleOtherInputKeyPress(e, categoryId)}
+                        className="flex-1 px-4 py-3 bg-slate-700/70 border border-slate-600 rounded-xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-400/20 focus:border-blue-400 transition-all duration-300"
+                        autoFocus
+                      />
+                      <button
+                        onClick={() => {
+                          const input = document.querySelector('input[placeholder*="Add a"]') as HTMLInputElement
+                          if (input) {
+                            handleCustomServiceAdd(categoryId, input.value)
+                            input.value = ''
+                          }
+                        }}
+                        className="px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold rounded-lg transition-all duration-300 shadow-lg"
+                      >
+                        Add
+                      </button>
+                    </div>
+                  </div>
+                )}
+                
+                {/* Services Grid for this category */}
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                  {services.map((service, index) => {
+                    const selected = isServiceSelected(service.name)
+                    const visualData = SERVICE_VISUAL_MAP[service.name] || { icon: '?', brandColor: '#6B7280' }
+                    
+                    return (
+                      <button
+                        key={service.id}
+                        onClick={() => handleServiceToggle(service.name)}
+                        disabled={servicesLoading}
+                        style={{ animationDelay: `${index * 50}ms` }}
+                        className={`
+                          group relative p-4 sm:p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95
+                          ${servicesLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
+                          ${selected 
+                            ? 'bg-gradient-to-br from-red-600 via-orange-500 to-red-700 text-white shadow-xl shadow-red-500/25' 
+                            : 'bg-slate-800/70 backdrop-blur-sm text-slate-200 shadow-lg hover:shadow-xl border border-slate-600/40 hover:bg-slate-700/80'
+                          }
+                        `}
+                      >
+                        {/* Selection glow effect */}
+                        {selected && (
+                          <div className="absolute -inset-1 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-2xl blur-lg opacity-30"></div>
+                        )}
+                        
+                        <div className="relative text-center">
+                          <div 
+                            className={`
+                              w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 shadow-lg
+                              ${selected 
+                                ? 'bg-white/20 backdrop-blur-sm border border-white/30' 
+                                : 'bg-white'
+                              }
+                            `}
+                          >
+                            {service.logoUrl && !logoErrors[service.id] ? (
+                              <div className="relative w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center">
+                                <img 
+                                  src={service.logoUrl} 
+                                  alt={`${service.name} logo`}
+                                  className="w-full h-full object-contain"
+                                  style={{ 
+                                    maxWidth: '100%',
+                                    maxHeight: '100%',
+                                    filter: selected ? 'brightness(0) invert(1)' : 'none'
+                                  }}
+                                  onError={() => {
+                                    // Mark this logo as failed and trigger re-render
+                                    setLogoErrors(prev => ({ ...prev, [service.id]: true }))
+                                  }}
+                                />
+                              </div>
+                            ) : (
+                              <div 
+                                className="w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-lg"
+                                style={{ 
+                                  backgroundColor: selected ? 'rgba(255,255,255,0.2)' : visualData.brandColor,
+                                  backdropFilter: selected ? 'blur(4px)' : 'none'
+                                }}
+                              >
+                                <span 
+                                  className={`${visualData.icon.length > 2 ? 'text-xs' : visualData.icon.length > 1 ? 'text-sm' : 'text-lg sm:text-xl'} font-black filter drop-shadow-sm text-white`}
+                                >
+                                  {visualData.icon}
+                                </span>
+                              </div>
+                            )}
+                          </div>
+                          
+                          <h3 className={`font-semibold text-xs sm:text-sm leading-tight transition-colors duration-300 ${
+                            selected ? 'text-white' : 'text-slate-200 group-hover:text-white'
+                          }`}>
+                            {service.name}
+                          </h3>
+                          
+                          {/* Selection indicator */}
+                          {selected && (
+                            <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-lg">
+                              <svg className="w-3 h-3 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                              </svg>
+                            </div>
+                          )}
+                        </div>
+                      </button>
+                    )
+                  })}
+                  
+                  {/* Custom Services for this category */}
+                  {Object.entries(customServices)
+                    .filter(([id]) => id.includes(categoryId))
+                    .map(([customId, serviceName]) => {
+                      const selected = localSelectedServices.includes(customId)
+                      return (
+                        <div
+                          key={customId}
+                          className={`
+                            group relative p-4 sm:p-6 rounded-2xl transition-all duration-500
+                            ${selected 
+                              ? 'bg-gradient-to-br from-red-600 via-orange-500 to-red-700 text-white shadow-xl shadow-red-500/25' 
+                              : 'bg-slate-800/70 backdrop-blur-sm text-slate-200 shadow-lg border border-slate-600/40'
+                            }
+                          `}
+                        >
+                          <div className="relative text-center">
+                            <div className={`
+                              w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-3 rounded-xl flex items-center justify-center text-xl sm:text-2xl
+                              ${selected 
+                                ? 'bg-white/20 backdrop-blur-sm border border-white/30 shadow-lg' 
+                                : 'bg-emerald-600 shadow-lg'
+                              }
+                            `}>
+                              <span className="filter drop-shadow-sm">✨</span>
+                            </div>
+                            
+                            <h3 className={`font-semibold text-xs sm:text-sm leading-tight ${
+                              selected ? 'text-white' : 'text-slate-200'
+                            }`}>
+                              {serviceName}
+                            </h3>
+                            
+                            {/* Selection indicator */}
+                            {selected && (
+                              <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-lg">
+                                <svg className="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20">
+                                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                </svg>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )
+                    })
+                  }
+                </div>
+              </div>
             )
           })}
         </div>
@@ -296,14 +553,11 @@ export function VisualServicesPage() {
               <button
                 onClick={handleContinue}
                 disabled={savingChanges}
-                className="group relative w-full bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-600 hover:from-emerald-600 hover:via-blue-600 hover:to-purple-700 text-white text-xl font-bold py-5 rounded-2xl transition-all duration-300 shadow-2xl hover:shadow-emerald-500/25 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:transform-none"
+                className="group relative w-full bg-gradient-to-r from-red-600 via-orange-500 to-red-700 hover:from-red-700 hover:via-orange-600 hover:to-red-800 text-white text-xl font-black py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-red-500/25 transform hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50 disabled:transform-none ring-2 ring-orange-500/20 hover:ring-orange-400/40"
               >
                 <span className="relative z-10 flex items-center justify-center">
                   {savingChanges ? (
-                    <>
-                      <div className="animate-spin w-5 h-5 border-2 border-white border-t-transparent rounded-full mr-2"></div>
-                      <span>Saving...</span>
-                    </>
+                    <ButtonLoading message="Saving..." size="md" />
                   ) : (
                     <>
                       Continue
@@ -315,11 +569,17 @@ export function VisualServicesPage() {
                 </span>
                 
                 {/* Button glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-700 rounded-lg blur opacity-20"></div>
               </button>
             </div>
           </div>
         )}
+        
+        {/* live.smpl Branding */}
+        <div className="mt-12 text-center">
+          <p className="text-xs text-slate-400 font-medium">live.smpl</p>
+        </div>
       </div>
     </div>
   )

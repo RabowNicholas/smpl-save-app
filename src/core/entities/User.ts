@@ -1,5 +1,6 @@
 import { User } from '@/core/types'
 import { randomUUID } from 'crypto'
+import { generateSafeUserCode } from '@/core/utils/userCode'
 
 export function createUser(phone: string): User {
   if (!validatePhoneNumber(phone)) {
@@ -10,6 +11,7 @@ export function createUser(phone: string): User {
   
   return {
     id: randomUUID(),
+    userCode: generateSafeUserCode(),
     phone,
     createdAt: now,
     updatedAt: now,

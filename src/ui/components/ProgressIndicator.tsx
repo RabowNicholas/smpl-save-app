@@ -10,7 +10,7 @@ export function ProgressIndicator({ currentStep, totalSteps, steps }: ProgressIn
   return (
     <div className="w-full max-w-2xl mx-auto mb-8">
       {/* Progress Bar */}
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-center justify-between mb-6">
         {steps.map((step, index) => {
           const stepNumber = index + 1
           const isActive = stepNumber === currentStep
@@ -20,16 +20,16 @@ export function ProgressIndicator({ currentStep, totalSteps, steps }: ProgressIn
             <div key={step} className="flex items-center">
               {/* Step Circle */}
               <div className={`
-                relative flex items-center justify-center w-10 h-10 rounded-full text-sm font-medium
+                relative flex items-center justify-center w-12 h-12 rounded-full text-sm font-bold shadow-lg transition-all duration-300
                 ${isCompleted 
-                  ? 'bg-green-500 text-white' 
+                  ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-emerald-500/25' 
                   : isActive 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-200 text-gray-500'
+                    ? 'bg-gradient-to-br from-red-600 via-orange-500 to-red-700 text-white shadow-red-500/25 ring-2 ring-orange-500/20' 
+                    : 'bg-slate-700/70 border border-slate-600/40 text-slate-400'
                 }
               `}>
                 {isCompleted ? (
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
                 ) : (
@@ -40,10 +40,10 @@ export function ProgressIndicator({ currentStep, totalSteps, steps }: ProgressIn
               {/* Connector Line */}
               {index < steps.length - 1 && (
                 <div className={`
-                  w-16 h-1 mx-2
-                  ${isCompleted || (isActive && index < currentStep - 1) 
-                    ? 'bg-green-500' 
-                    : 'bg-gray-200'
+                  flex-1 h-1 mx-4 rounded-full transition-all duration-300
+                  ${isCompleted
+                    ? 'bg-gradient-to-r from-emerald-500 to-emerald-600 shadow-sm' 
+                    : 'bg-slate-700/50'
                   }
                 `} />
               )}
@@ -63,12 +63,12 @@ export function ProgressIndicator({ currentStep, totalSteps, steps }: ProgressIn
             <div 
               key={step}
               className={`
-                text-center font-medium
+                text-center font-medium transition-colors duration-300
                 ${isCompleted 
-                  ? 'text-green-600' 
+                  ? 'text-emerald-400' 
                   : isActive 
-                    ? 'text-blue-600' 
-                    : 'text-gray-400'
+                    ? 'text-orange-200' 
+                    : 'text-slate-400'
                 }
               `}
             >

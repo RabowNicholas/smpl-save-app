@@ -111,7 +111,8 @@ export function ServiceSelector({
         {onRetry && (
           <button
             onClick={onRetry}
-            className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            className="px-4 py-3 bg-red-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+            style={{ minHeight: '44px' }}
           >
             Try again
           </button>
@@ -193,7 +194,7 @@ export function ServiceSelector({
               {/* Selection Indicator */}
               {isSelected && (
                 <div 
-                  className="absolute top-2 right-2 w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center"
+                  className="absolute top-2 right-2 w-6 h-6 bg-red-600 rounded-full flex items-center justify-center"
                   data-testid={`check-icon-${service.id}`}
                 >
                   <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">

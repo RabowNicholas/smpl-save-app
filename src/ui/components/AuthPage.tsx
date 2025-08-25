@@ -1,11 +1,14 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import { LoadingSpinner } from './LoadingSpinner'
+import { ProgressIndicator } from './ProgressIndicator'
 
 export interface AuthPageProps {
   step: 'phone' | 'code'
   onPhoneSubmit: (phone: string) => void
   onCodeSubmit: (phone: string, code: string) => void
+  onResendCode?: (phone: string) => void
   onBack?: () => void
   phoneNumber?: string
   loading: boolean
@@ -16,6 +19,7 @@ export function AuthPage({
   step,
   onPhoneSubmit,
   onCodeSubmit,
+  onResendCode,
   onBack,
   phoneNumber = '',
   loading,
@@ -25,6 +29,7 @@ export function AuthPage({
   const [code, setCode] = useState('')
   const [phoneError, setPhoneError] = useState('')
   const [codeError, setCodeError] = useState('')
+  const [resendCooldown, setResendCooldown] = useState(0)
   const codeInputRef = useRef<HTMLInputElement>(null)
 
   // Auto-focus code input when step changes to code
@@ -33,6 +38,19 @@ export function AuthPage({
       codeInputRef.current.focus()
     }
   }, [step])
+
+  // Handle resend cooldown timer
+  useEffect(() => {
+    let interval: NodeJS.Timeout
+    if (resendCooldown > 0) {
+      interval = setInterval(() => {
+        setResendCooldown(prev => prev - 1)
+      }, 1000)
+    }
+    return () => {
+      if (interval) clearInterval(interval)
+    }
+  }, [resendCooldown])
 
   const formatPhoneNumber = (value: string): string => {
     // Remove all non-numeric characters except +
@@ -109,6 +127,13 @@ export function AuthPage({
     onCodeSubmit(phoneNumber, code)
   }
 
+  const handleResendCode = () => {
+    if (onResendCode && phoneNumber && resendCooldown === 0) {
+      onResendCode(phoneNumber)
+      setResendCooldown(30) // 30-second cooldown
+    }
+  }
+
   const formatPhoneDisplay = (phone: string): string => {
     if (!phone) return ''
     
@@ -126,28 +151,44 @@ export function AuthPage({
 
   if (step === 'phone') {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Rebel floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-green-400/20 to-blue-500/20 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/15 to-orange-600/15 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/15 to-red-600/15 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-md mx-auto relative z-10">
-          <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-8 shadow-2xl border border-slate-700/50">
+          {/* SMPL Logo */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+              smpl
+            </h1>
+          </div>
+          
+          {/* Progress indicator */}
+          <ProgressIndicator 
+            currentStep={1}
+            totalSteps={3}
+            steps={['Sign Up', 'Select Services', 'Track & Save']}
+          />
+          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
             <div className="text-center mb-8">
               <div className="relative w-20 h-20 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full opacity-20 blur-lg"></div>
-                <div className="relative w-full h-full bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-xl">
-                  <span className="text-3xl">🔒</span>
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                  <span className="text-3xl">🔥</span>
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-3">
-                Secure Your Savings Journey
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
+                Group discounts on insurance, internet, phones & more
               </h1>
-              <p className="text-slate-300 text-lg">
-                We&apos;ll send a code to verify your phone and keep your data safe
+              <p className="text-orange-200 text-lg font-medium mb-4">
+                Save together
+              </p>
+              <p className="text-slate-300 text-base">
+                We&apos;ll send a code to verify your phone and get you started
               </p>
             </div>
         
@@ -202,21 +243,26 @@ export function AuthPage({
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-700 hover:from-blue-700 hover:via-purple-700 hover:to-blue-800 text-white text-xl font-semibold py-5 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:transform-none"
+                className="group relative w-full bg-gradient-to-r from-red-600 via-orange-500 to-red-700 hover:from-red-700 hover:via-orange-600 hover:to-red-800 text-white text-xl font-black py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-red-500/25 transform hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50 disabled:transform-none ring-2 ring-orange-500/20 hover:ring-orange-400/40"
               >
                 <span className="relative z-10 flex items-center justify-center">
                   {loading && (
-                    <div 
-                      className="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent mr-3"
-                      data-testid="loading-spinner"
-                    />
+                    <div className="mr-3">
+                      <LoadingSpinner size="lg" />
+                    </div>
                   )}
-                  {loading ? 'Sending...' : 'Start Finding Savings'}
+                  {loading ? 'Sending code...' : 'Become a member'}
                 </span>
-                {/* Button glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                {/* Aggressive glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-700 rounded-lg blur opacity-20"></div>
               </button>
             </form>
+          </div>
+          
+          {/* live.smpl Branding */}
+          <div className="mt-6 text-center">
+            <p className="text-xs text-slate-500 font-medium">live.smpl</p>
           </div>
         </div>
       </div>
@@ -224,34 +270,50 @@ export function AuthPage({
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
-      {/* Floating background elements */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
+      {/* Rebel floating background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-400/20 to-purple-600/20 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-green-400/20 to-blue-500/20 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/15 to-orange-600/15 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/15 to-red-600/15 rounded-full blur-3xl"></div>
       </div>
       
       <div className="max-w-md mx-auto relative z-10">
-        <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-8 shadow-2xl border border-slate-700/50">
+        {/* SMPL Logo */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+            smpl
+          </h1>
+        </div>
+        
+        {/* Progress indicator */}
+        <ProgressIndicator 
+          currentStep={1}
+          totalSteps={3}
+          steps={['Sign Up', 'Select Services', 'Track & Save']}
+        />
+        <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
           <div className="text-center mb-8">
             <div className="relative w-20 h-20 mx-auto mb-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500 to-blue-600 rounded-full opacity-20 blur-lg"></div>
-              <div className="relative w-full h-full bg-gradient-to-br from-emerald-500 to-blue-600 rounded-full flex items-center justify-center shadow-xl">
-                <span className="text-3xl">📱</span>
+              <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
+              <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                <span className="text-3xl">✨</span>
               </div>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-blue-200 bg-clip-text text-transparent mb-4">
-              Enter your verification code
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
+              Group discounts on insurance, internet, phones & more
             </h1>
+            <p className="text-orange-200 text-lg font-medium mb-4">
+              Save together
+            </p>
             
-            <div className="bg-gradient-to-r from-blue-900/50 to-purple-900/50 rounded-2xl p-4 mb-2 border border-blue-700/50">
-              <p className="text-slate-200 font-medium">
-                We sent a code to {formatPhoneDisplay(phoneNumber)}
+            <div className="bg-gradient-to-r from-red-950/60 to-slate-900/80 rounded-lg p-4 mb-2 border border-red-800/40 ring-1 ring-red-600/20">
+              <p className="text-red-100 font-bold">
+                Verification code sent to {formatPhoneDisplay(phoneNumber)}
               </p>
             </div>
-            <p className="text-slate-300 text-lg">
-              Almost there! Your savings dashboard is waiting
+            <p className="text-slate-300 text-base sm:text-lg">
+              Enter the 6-digit code we sent you
             </p>
           </div>
           
@@ -305,33 +367,51 @@ export function AuthPage({
               <button
                 type="submit"
                 disabled={loading}
-                className="group relative w-full bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-600 hover:from-emerald-600 hover:via-blue-600 hover:to-purple-700 text-white text-xl font-semibold py-5 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:transform-none"
+                className="group relative w-full bg-gradient-to-r from-red-600 via-orange-500 to-red-700 hover:from-red-700 hover:via-orange-600 hover:to-red-800 text-white text-xl font-black py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-red-500/25 transform hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50 disabled:transform-none ring-2 ring-orange-500/20 hover:ring-orange-400/40"
               >
                 <span className="relative z-10 flex items-center justify-center">
                   {loading && (
-                    <div 
-                      className="animate-spin rounded-full h-6 w-6 border-2 border-white border-t-transparent mr-3"
-                      data-testid="loading-spinner"
-                    />
+                    <div className="mr-3">
+                      <LoadingSpinner size="lg" />
+                    </div>
                   )}
-                  {loading ? 'Verifying...' : 'Access My Savings Dashboard'}
+                  {loading ? 'Verifying...' : 'Complete signup'}
                 </span>
-                {/* Button glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-emerald-400 via-blue-400 to-purple-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-40 transition-opacity duration-300"></div>
+                {/* Aggressive glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-700 rounded-lg blur opacity-20"></div>
               </button>
               
-              {onBack && (
-                <button
-                  type="button"
-                  onClick={onBack}
-                  disabled={loading}
-                  className="w-full bg-slate-700/70 backdrop-blur-sm hover:bg-slate-700/90 text-slate-200 hover:text-white text-lg font-medium py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl border border-slate-600/40 transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
-                >
-                  Back
-                </button>
-              )}
+              <div className="flex gap-3">
+                {onBack && (
+                  <button
+                    type="button"
+                    onClick={onBack}
+                    disabled={loading}
+                    className="flex-1 bg-slate-700/70 backdrop-blur-sm hover:bg-slate-700/90 text-slate-200 hover:text-white text-lg font-medium py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl border border-slate-600/40 transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                  >
+                    Back
+                  </button>
+                )}
+                
+                {onResendCode && (
+                  <button
+                    type="button"
+                    onClick={handleResendCode}
+                    disabled={loading || resendCooldown > 0}
+                    className="flex-1 bg-slate-700/70 backdrop-blur-sm hover:bg-slate-700/90 text-slate-200 hover:text-white text-lg font-medium py-4 rounded-2xl transition-all duration-300 shadow-lg hover:shadow-xl border border-slate-600/40 transform hover:scale-[1.01] active:scale-[0.99] disabled:opacity-50"
+                  >
+                    {resendCooldown > 0 ? `Resend (${resendCooldown}s)` : 'Resend code'}
+                  </button>
+                )}
+              </div>
             </div>
           </form>
+        </div>
+        
+        {/* live.smpl Branding */}
+        <div className="mt-6 text-center">
+          <p className="text-xs text-slate-500 font-medium">live.smpl</p>
         </div>
       </div>
     </div>

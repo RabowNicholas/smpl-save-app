@@ -129,24 +129,45 @@ export default function Home() {
   // Show loading screen while checking authentication
   if (isCheckingAuth) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Rebel floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-green-400/10 to-blue-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="max-w-sm mx-auto text-center relative z-10">
-          <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50">
-            <div className="relative mb-8">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <div className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent" />
+        <div className="max-w-md mx-auto relative z-10">
+          {/* SMPL Logo */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+              smpl
+            </h1>
+          </div>
+          
+          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
+            <div className="text-center mb-8">
+              <div className="relative w-20 h-20 mx-auto mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                  <div className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent" />
+                </div>
               </div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-200 to-slate-200 bg-clip-text text-transparent mb-2">
-                Loading...
-              </h3>
-              <p className="text-slate-300">Checking authentication</p>
+              
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
+                Group discounts on insurance, internet, phones & more
+              </h1>
+              <p className="text-orange-200 text-lg font-medium mb-4">
+                Save together
+              </p>
+              <p className="text-slate-300 text-base">
+                Loading your account...
+              </p>
             </div>
+          </div>
+          
+          {/* live.smpl Branding */}
+          <div className="mt-6 text-center">
+            <p className="text-xs text-slate-500 font-medium">live.smpl</p>
           </div>
         </div>
       </div>
@@ -163,6 +184,7 @@ export default function Home() {
         step={step}
         onPhoneSubmit={handlePhoneSubmit}
         onCodeSubmit={handleCodeSubmit}
+        onResendCode={step === 'code' ? handlePhoneSubmit : undefined}
         onBack={step === 'code' ? handleBack : undefined}
         phoneNumber={phoneNumber}
         loading={loading}
@@ -244,24 +266,45 @@ function AppContent() {
   // Show loading while determining user state
   if (isLoadingUserData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Rebel floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-400/10 to-purple-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-green-400/10 to-blue-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
         </div>
         
-        <div className="max-w-sm mx-auto text-center relative z-10">
-          <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50">
-            <div className="relative mb-8">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
-                <div className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent" />
+        <div className="max-w-md mx-auto relative z-10">
+          {/* SMPL Logo */}
+          <div className="text-center mb-8">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+              smpl
+            </h1>
+          </div>
+          
+          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
+            <div className="text-center mb-8">
+              <div className="relative w-20 h-20 mx-auto mb-6">
+                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                  <div className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent" />
+                </div>
               </div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-blue-200 to-slate-200 bg-clip-text text-transparent mb-2">
-                Loading your dashboard...
-              </h3>
-              <p className="text-slate-300">Preparing your services</p>
+              
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
+                Group discounts on insurance, internet, phones & more
+              </h1>
+              <p className="text-orange-200 text-lg font-medium mb-4">
+                Save together
+              </p>
+              <p className="text-slate-300 text-base">
+                Setting up your dashboard...
+              </p>
             </div>
+          </div>
+          
+          {/* live.smpl Branding */}
+          <div className="mt-6 text-center">
+            <p className="text-xs text-slate-500 font-medium">live.smpl</p>
           </div>
         </div>
       </div>

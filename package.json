@@ -1,8 +1,20 @@
 {
   "name": "smpl-save-app",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
+  "description": "A service tracking app with group discounts for subscriptions like streaming, groceries, and utilities. Features Apple HIG-compliant UI, SMS authentication, and beautiful user experience.",
+  "keywords": ["nextjs", "react", "typescript", "supabase", "twilio", "subscription-tracker", "group-discounts", "apple-hig", "accessibility", "mobile-first"],
+  "author": "SMPL Team",
+  "license": "MIT",
   "type": "module",
+  "homepage": "https://live.smpl.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/smpl/smpl-save-app.git"
+  },
+  "bugs": {
+    "url": "https://github.com/smpl/smpl-save-app/issues"
+  },
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",

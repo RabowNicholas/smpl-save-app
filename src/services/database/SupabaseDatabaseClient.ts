@@ -103,6 +103,7 @@ export class SupabaseDatabaseClient implements DatabaseClient {
       .from('users')
       .insert({
         id: user.id,
+        user_code: user.userCode,
         phone: user.phone,
         created_at: user.createdAt.toISOString(),
         updated_at: user.updatedAt.toISOString(),
@@ -141,6 +142,7 @@ export class SupabaseDatabaseClient implements DatabaseClient {
 
     return {
       id: data.id,
+      userCode: data.user_code,
       phone: data.phone,
       createdAt: new Date(data.created_at),
       updatedAt: new Date(data.updated_at),
