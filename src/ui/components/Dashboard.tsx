@@ -8,37 +8,36 @@ import { LoadingSpinner } from './LoadingSpinner'
 
 // Enhanced service branding with better icons and brand colors
 const SERVICE_VISUAL_MAP: Record<string, { icon: string; brandColor: string }> = {
-  // Streaming & Entertainment
-  'Netflix': { icon: 'N', brandColor: '#E50914' },
-  'Disney+': { icon: 'D+', brandColor: '#113CCF' }, 
-  'Hulu': { icon: 'hulu', brandColor: '#1CE783' },
-  'Amazon Prime Video': { icon: '▶', brandColor: '#00A8E1' },
-  'HBO Max': { icon: 'HBO', brandColor: '#8B5CF6' },
-  'Spotify': { icon: '♪', brandColor: '#1DB954' },
-  'Apple Music': { icon: '♪', brandColor: '#FA243C' },
-  'YouTube Premium': { icon: '▷', brandColor: '#FF0000' },
-  
-  // Groceries  
-  'Walmart': { icon: 'W', brandColor: '#004C91' },
-  'Target': { icon: '◉', brandColor: '#CC0000' },
-  'Amazon Fresh': { icon: 'A', brandColor: '#FF9900' },
-  'Costco': { icon: 'C', brandColor: '#00539C' },
-  
-  // Internet / Phone Provider
+  // Phone Carriers
   'Verizon': { icon: 'V', brandColor: '#CD040B' },
   'AT&T': { icon: 'AT&T', brandColor: '#00A8E0' },
   'T-Mobile': { icon: 'T', brandColor: '#E20074' },
+  'Sprint': { icon: 'S', brandColor: '#FFCD00' },
+  'Mint Mobile': { icon: 'M', brandColor: '#74C365' },
+  'Cricket': { icon: 'C', brandColor: '#5CB85C' },
+  
+  // Home Insurance
+  'State Farm': { icon: 'SF', brandColor: '#CC2936' },
+  'GEICO': { icon: 'G', brandColor: '#006747' },
+  'Progressive': { icon: 'P', brandColor: '#0066CC' },
+  'Allstate': { icon: 'A', brandColor: '#0033A0' },
+  'Liberty Mutual': { icon: 'LM', brandColor: '#FDB515' },
+  'Farmers': { icon: 'F', brandColor: '#004225' },
+  
+  // Auto Insurance (same companies, different branding context)
+  // Note: Using slightly different colors to differentiate from home insurance
+  
+  // Renters Insurance  
+  'Lemonade': { icon: 'L', brandColor: '#FF6B6B' },
+  'Assurant': { icon: 'AS', brandColor: '#1E3A8A' },
+  
+  // Internet Providers
   'Comcast Xfinity': { icon: 'X', brandColor: '#7B3F98' },
-  
-  // Food Delivery
-  'DoorDash': { icon: 'DD', brandColor: '#FF3008' },
-  'Uber Eats': { icon: 'UE', brandColor: '#06C167' },
-  'Grubhub': { icon: 'GH', brandColor: '#FF8000' },
-  
-  // Transportation
-  'Uber': { icon: 'U', brandColor: '#000000' },
-  'Lyft': { icon: 'L', brandColor: '#FF00BF' },
-  'Enterprise Rent-A-Car': { icon: 'E', brandColor: '#00A651' },
+  'Spectrum': { icon: 'SP', brandColor: '#1BA1E2' },
+  'Verizon Fios': { icon: 'VF', brandColor: '#CD040B' },
+  'AT&T Internet': { icon: 'ATI', brandColor: '#00A8E0' },
+  'Cox': { icon: 'COX', brandColor: '#0066CC' },
+  'CenturyLink': { icon: 'CL', brandColor: '#00A651' },
 }
 
 export function Dashboard() {
