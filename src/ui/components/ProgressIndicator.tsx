@@ -24,7 +24,7 @@ export function ProgressIndicator({ currentStep, steps }: ProgressIndicatorProps
                 ${isCompleted 
                   ? 'bg-gradient-to-br from-emerald-500 to-emerald-600 text-white shadow-emerald-500/25' 
                   : isActive 
-                    ? 'bg-gradient-to-br from-red-600 via-orange-500 to-red-700 text-white shadow-red-500/25 ring-2 ring-orange-500/20' 
+                    ? 'bg-gradient-to-br from-indigo-600 via-purple-500 to-blue-600 text-white shadow-purple-500/25 ring-2 ring-indigo-500/20' 
                     : 'bg-slate-700/70 border border-slate-600/40 text-slate-400'
                 }
               `}>
@@ -67,7 +67,7 @@ export function ProgressIndicator({ currentStep, steps }: ProgressIndicatorProps
                 ${isCompleted 
                   ? 'text-emerald-400' 
                   : isActive 
-                    ? 'text-orange-200' 
+                    ? 'text-indigo-200' 
                     : 'text-slate-400'
                 }
               `}

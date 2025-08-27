@@ -37,23 +37,23 @@ export function ProgressTracker({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden" data-testid="progress-tracker">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden" data-testid="progress-tracker">
         {/* Floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-sm mx-auto text-center relative z-10">
           <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50">
             <div className="relative mb-8">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-red-600 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <div 
                   className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent"
                   data-testid="loading-spinner"
                 />
               </div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-orange-200 to-red-200 bg-clip-text text-transparent mb-2">
+              <h3 className="text-xl font-bold bg-gradient-to-r from-purple-200 to-indigo-200 bg-clip-text text-transparent mb-2">
                 Loading progress...
               </h3>
               <p className="text-slate-300">Tracking your data</p>
@@ -105,7 +105,7 @@ export function ProgressTracker({
               fill="none"
               strokeDasharray={`${2 * Math.PI * 40}`}
               strokeDashoffset={`${2 * Math.PI * 40 * (1 - overallProgress.completionPercentage / 100)}`}
-              className="text-red-600 transition-all duration-500 ease-out"
+              className="text-red-400 transition-all duration-500 ease-out"
               data-testid="progress-circle"
               data-progress={overallProgress.completionPercentage}
             />
@@ -170,7 +170,7 @@ export function ProgressTracker({
               className={`
                 flex items-center p-4 rounded-lg border-2 transition-all duration-200
                 ${progress.status === 'completed' ? 'border-green-200 bg-green-50 completed' : ''}
-                ${progress.status === 'in-progress' ? 'border-red-200 bg-red-50 in-progress' : ''}
+                ${progress.status === 'in-progress' ? 'border-purple-200 bg-purple-50 in-progress' : ''}
                 ${progress.status === 'incomplete' ? 'border-gray-200 bg-gray-50 incomplete' : ''}
                 ${isClickable ? 'cursor-pointer hover:shadow-md focus:ring-2 focus:ring-red-500 focus:outline-none' : 'cursor-default'}
               `}
@@ -208,7 +208,7 @@ export function ProgressTracker({
                         <div className="ml-2 w-20 bg-gray-200 rounded-full h-2">
                           <div
                             className={`h-2 rounded-full transition-all duration-300 ${
-                              progress.status === 'in-progress' ? 'bg-red-500' : 'bg-gray-300'
+                              progress.status === 'in-progress' ? 'bg-purple-500' : 'bg-gray-300'
                             }`}
                             style={{
                               width: `${(progress.selectedServices.length / progress.totalServices) * 100}%`

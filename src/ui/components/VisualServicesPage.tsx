@@ -124,20 +124,16 @@ export function VisualServicesPage() {
   // getPrioritizedServices function available for future use if needed
   // Currently unused but kept for potential popular services feature
 
-  const handleServiceToggle = (serviceName: string) => {
+  const handleServiceToggle = (serviceId: string) => {
     // Prevent clicks while services are loading
     if (servicesLoading) return
     
-    // Find the actual service from our loaded services
-    const service = allServices.find(s => s.name === serviceName)
-    if (!service) return
-
-    const isSelected = localSelectedServices.includes(service.id)
+    const isSelected = localSelectedServices.includes(serviceId)
     
     if (isSelected) {
-      setLocalSelectedServices(prev => prev.filter(id => id !== service.id))
+      setLocalSelectedServices(prev => prev.filter(id => id !== serviceId))
     } else {
-      setLocalSelectedServices(prev => [...prev, service.id])
+      setLocalSelectedServices(prev => [...prev, serviceId])
     }
   }
 
@@ -188,9 +184,8 @@ export function VisualServicesPage() {
     }
   }
 
-  const isServiceSelected = (serviceName: string) => {
-    const service = allServices.find(s => s.name === serviceName)
-    return service ? localSelectedServices.includes(service.id) : false
+  const isServiceSelected = (serviceId: string) => {
+    return localSelectedServices.includes(serviceId)
   }
 
   const handleCustomServiceAdd = (categoryId: string, serviceName: string) => {
@@ -221,17 +216,17 @@ export function VisualServicesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black py-12 px-6 relative overflow-hidden">
-      {/* Rebel floating background elements */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 py-12 px-6 relative overflow-hidden">
+      {/* Sage floating background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
       </div>
       
       <div className="max-w-4xl mx-auto relative z-10">
         {/* SMPL Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
             smpl
           </h1>
         </div>
@@ -246,17 +241,17 @@ export function VisualServicesPage() {
         {/* Enhanced header */}
         <div className="text-center mb-16">
           
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-4 leading-tight">
-            Group discounts on insurance, internet, phones & more
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-4 leading-tight">
+            Discover clarity in your financial choices
           </h1>
-          <p className="text-orange-200 text-lg font-medium mb-4">
-            Save together
+          <p className="text-indigo-200 text-lg font-medium mb-4">
+            Grow wise together
           </p>
           <p className="text-lg sm:text-xl text-slate-200 font-medium">
             {servicesLoading ? (
-              <InlineLoading message="Loading your services..." size="md" color="orange" />
+              <InlineLoading message="Preparing your options..." size="md" color="indigo" />
             ) : (
-              'Select the services you use'
+              'Choose mindfully the services that serve your life'
             )}
           </p>
         </div>
@@ -270,7 +265,7 @@ export function VisualServicesPage() {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search services..."
-                className="w-full px-6 py-4 bg-slate-800/70 border border-slate-600/40 rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-400/30 focus:border-orange-400/50 transition-all duration-300 pr-12"
+                className="w-full px-6 py-4 bg-slate-800/70 border border-slate-600/40 rounded-2xl text-slate-200 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-400/30 focus:border-purple-400/50 transition-all duration-300 pr-12"
               />
               <div className="absolute right-4 top-1/2 transform -translate-y-1/2 text-slate-300">
                 {searchQuery ? (
@@ -353,7 +348,7 @@ export function VisualServicesPage() {
                             input.value = ''
                           }
                         }}
-                        className="px-4 py-3 bg-gradient-to-r from-red-600 to-orange-600 hover:from-red-700 hover:to-orange-700 text-white font-bold rounded-lg transition-all duration-300 shadow-lg"
+                        className="px-4 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold rounded-lg transition-all duration-300 shadow-lg"
                       >
                         Add
                       </button>
@@ -364,27 +359,27 @@ export function VisualServicesPage() {
                 {/* Services Grid for this category */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                   {services.map((service, index) => {
-                    const selected = isServiceSelected(service.name)
+                    const selected = isServiceSelected(service.id)
                     const visualData = SERVICE_VISUAL_MAP[service.name] || { icon: '?', brandColor: '#6B7280' }
                     
                     return (
                       <button
                         key={service.id}
-                        onClick={() => handleServiceToggle(service.name)}
+                        onClick={() => handleServiceToggle(service.id)}
                         disabled={servicesLoading}
                         style={{ animationDelay: `${index * 50}ms` }}
                         className={`
                           group relative p-4 sm:p-6 rounded-2xl transition-all duration-500 transform hover:scale-105 active:scale-95
                           ${servicesLoading ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}
                           ${selected 
-                            ? 'bg-gradient-to-br from-red-600 via-orange-500 to-red-700 text-white shadow-xl shadow-red-500/25' 
+                            ? 'bg-gradient-to-br from-indigo-600 via-purple-500 to-blue-600 text-white shadow-xl shadow-purple-500/25' 
                             : 'bg-slate-800/70 backdrop-blur-sm text-slate-200 shadow-lg hover:shadow-xl border border-slate-600/40 hover:bg-slate-700/80'
                           }
                         `}
                       >
                         {/* Selection glow effect */}
                         {selected && (
-                          <div className="absolute -inset-1 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-2xl blur-lg opacity-30"></div>
+                          <div className="absolute -inset-1 bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400 rounded-2xl blur-lg opacity-30"></div>
                         )}
                         
                         <div className="relative text-center">
@@ -405,8 +400,7 @@ export function VisualServicesPage() {
                                   className="w-full h-full object-contain"
                                   style={{ 
                                     maxWidth: '100%',
-                                    maxHeight: '100%',
-                                    filter: selected ? 'brightness(0) invert(1)' : 'none'
+                                    maxHeight: '100%'
                                   }}
                                   onError={() => {
                                     // Mark this logo as failed and trigger re-render
@@ -440,7 +434,7 @@ export function VisualServicesPage() {
                           {/* Selection indicator */}
                           {selected && (
                             <div className="absolute -top-1 -right-1 w-5 h-5 bg-white rounded-full flex items-center justify-center shadow-lg">
-                              <svg className="w-3 h-3 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                              <svg className="w-3 h-3 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                               </svg>
                             </div>
@@ -461,7 +455,7 @@ export function VisualServicesPage() {
                           className={`
                             group relative p-4 sm:p-6 rounded-2xl transition-all duration-500
                             ${selected 
-                              ? 'bg-gradient-to-br from-red-600 via-orange-500 to-red-700 text-white shadow-xl shadow-red-500/25' 
+                              ? 'bg-gradient-to-br from-indigo-600 via-purple-500 to-blue-600 text-white shadow-xl shadow-purple-500/25' 
                               : 'bg-slate-800/70 backdrop-blur-sm text-slate-200 shadow-lg border border-slate-600/40'
                             }
                           `}
@@ -518,14 +512,14 @@ export function VisualServicesPage() {
               <button
                 onClick={handleContinue}
                 disabled={savingChanges}
-                className="group relative w-full bg-gradient-to-r from-red-600 via-orange-500 to-red-700 hover:from-red-700 hover:via-orange-600 hover:to-red-800 text-white text-xl font-black py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-red-500/25 transform hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50 disabled:transform-none ring-2 ring-orange-500/20 hover:ring-orange-400/40"
+                className="group relative w-full bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 hover:from-indigo-700 hover:via-purple-600 hover:to-blue-700 text-white text-xl font-semibold py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:scale-[1.03] active:scale-[0.97] disabled:opacity-50 disabled:transform-none ring-2 ring-purple-500/20 hover:ring-purple-400/40"
               >
                 <span className="relative z-10 flex items-center justify-center">
                   {savingChanges ? (
-                    <ButtonLoading message="Saving..." size="md" />
+                    <ButtonLoading message="Reflecting..." size="md" />
                   ) : (
                     <>
-                      Continue
+                      Continue Journey
                       <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>
@@ -534,8 +528,8 @@ export function VisualServicesPage() {
                 </span>
                 
                 {/* Button glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-                <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-700 rounded-lg blur opacity-20"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400 rounded-lg blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 rounded-lg blur opacity-20"></div>
               </button>
             </div>
           </div>

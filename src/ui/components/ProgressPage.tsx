@@ -71,26 +71,26 @@ export function ProgressPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Rebel floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Sage floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-md mx-auto relative z-10">
           {/* SMPL Logo */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
               smpl
             </h1>
           </div>
           
-          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
+          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-indigo-900/30 ring-1 ring-purple-500/20">
             <div className="text-center mb-8">
               <div className="relative w-20 h-20 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
-                <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-20 blur-lg"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-xl">
                   <div 
                     className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent"
                     data-testid="loading-spinner"
@@ -98,14 +98,14 @@ export function ProgressPage() {
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
-                Group discounts on insurance, internet, phones & more
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-3">
+                Discover clarity in your financial choices
               </h1>
-              <p className="text-orange-200 text-lg font-medium mb-4">
-                Save together
+              <p className="text-indigo-200 text-lg font-medium mb-4">
+                Grow wise together
               </p>
               <p className="text-slate-200 text-base">
-                Loading your tracked services...
+                Preparing your wisdom journey...
               </p>
             </div>
           </div>
@@ -143,23 +143,23 @@ export function ProgressPage() {
   // Focus on service organization and tracking
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
-      {/* Rebel celebration particle effects */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+      {/* Sage celebration light effects */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-red-400 rounded-full animate-ping" style={{ animationDelay: '0s' }}></div>
-        <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-orange-500 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
-        <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-red-500 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-orange-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '0s' }}></div>
+        <div className="absolute top-1/3 right-1/3 w-3 h-3 bg-blue-500 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/4 right-1/4 w-2 h-2 bg-indigo-500 rounded-full animate-ping" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-1/3 left-1/3 w-3 h-3 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '1.5s' }}></div>
         
-        {/* Rebel floating background gradients */}
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-red-500/15 to-orange-600/15 rounded-full blur-3xl"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-orange-500/15 to-red-600/15 rounded-full blur-3xl"></div>
+        {/* Sage floating background gradients */}
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/10 to-purple-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-purple-500/10 to-indigo-600/10 rounded-full blur-3xl"></div>
       </div>
       
       <div className="max-w-lg mx-auto text-center relative z-10">
         {/* SMPL Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
             smpl
           </h1>
         </div>
@@ -171,71 +171,71 @@ export function ProgressPage() {
           steps={['Sign Up', 'Select Services', 'Track & Save']}
         />
         
-        {/* Rebel glassmorphic celebration container */}
-        <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-10 shadow-2xl border border-red-900/30 mb-8 ring-1 ring-red-500/20">
-          {/* Enhanced celebration visual */}
+        {/* Sage wisdom celebration container */}
+        <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-indigo-900/40 mb-8 ring-1 ring-purple-500/20">
+          {/* Enhanced wisdom celebration visual */}
           <div className="mb-12">
             <div className="relative w-32 h-32 sm:w-40 sm:h-40 mx-auto mb-8">
-              {/* Rebel glow layers */}
-              <div className="absolute inset-0 bg-gradient-to-br from-red-500 via-orange-500 to-red-600 rounded-full opacity-20 blur-xl animate-pulse"></div>
-              <div className="absolute inset-2 bg-gradient-to-br from-red-500 via-orange-500 to-red-600 rounded-full opacity-40 blur-lg"></div>
+              {/* Sage glow layers */}
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 rounded-full opacity-20 blur-xl animate-pulse"></div>
+              <div className="absolute inset-2 bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 rounded-full opacity-40 blur-lg"></div>
               
-              {/* Main rebel celebration icon */}
-              <div className="relative w-full h-full bg-gradient-to-br from-red-500 via-orange-500 to-red-600 rounded-full flex items-center justify-center shadow-2xl border-4 border-orange-200/40">
-                <span className="text-5xl sm:text-7xl animate-bounce" style={{ animationDuration: '2s' }}>🔥</span>
+              {/* Main wisdom celebration icon */}
+              <div className="relative w-full h-full bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-600 rounded-full flex items-center justify-center shadow-2xl border-4 border-purple-200/40">
+                <span className="text-5xl sm:text-7xl animate-bounce" style={{ animationDuration: '2s' }}>🌟</span>
               </div>
               
-              {/* Floating rebel elements */}
-              <div className="absolute -top-2 -right-2 text-2xl animate-bounce" style={{ animationDelay: '0.5s' }}>⚡</div>
-              <div className="absolute -bottom-2 -left-2 text-2xl animate-bounce" style={{ animationDelay: '1s' }}>💪</div>
+              {/* Floating wisdom elements */}
+              <div className="absolute -top-2 -right-2 text-2xl animate-bounce" style={{ animationDelay: '0.5s' }}>✨</div>
+              <div className="absolute -bottom-2 -left-2 text-2xl animate-bounce" style={{ animationDelay: '1s' }}>🔮</div>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-6">
-              Thanks for joining
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-6">
+              Welcome to wisdom
             </h1>
             
-            <p className="text-lg sm:text-xl text-orange-200 font-medium mb-4">
-              You&apos;re now tracking
+            <p className="text-lg sm:text-xl text-indigo-200 font-medium mb-4">
+              You&apos;re now mindfully tracking
             </p>
             
-            {/* Enhanced service count display - Rebel theme */}
+            {/* Enhanced service count display - Wisdom theme */}
             <div className="relative mb-6">
-              <div className="text-5xl sm:text-7xl font-black bg-gradient-to-r from-red-500 via-orange-500 to-red-600 bg-clip-text text-transparent mb-2 leading-none">
+              <div className="text-5xl sm:text-7xl font-black bg-gradient-to-r from-indigo-500 via-purple-500 to-blue-600 bg-clip-text text-transparent mb-2 leading-none">
                 {selectedServiceDetails.length}
               </div>
-              <div className="absolute -inset-4 bg-gradient-to-r from-red-400/20 to-orange-400/20 rounded-2xl blur-lg"></div>
+              <div className="absolute -inset-4 bg-gradient-to-r from-indigo-400/20 to-purple-400/20 rounded-2xl blur-lg"></div>
               
-              <p className="text-xl sm:text-2xl text-red-200 font-bold">
-                {selectedServiceDetails.length === 1 ? 'service tracked' : 'services tracked'}
+              <p className="text-xl sm:text-2xl text-indigo-200 font-semibold">
+                {selectedServiceDetails.length === 1 ? 'choice understood' : 'choices understood'}
               </p>
-              <p className="text-lg text-orange-200 font-medium mt-2">
-                Group savings coming soon
+              <p className="text-lg text-purple-200 font-medium mt-2">
+                Collective wisdom grows
               </p>
             </div>
             
-            <div className="bg-gradient-to-r from-red-950/60 to-slate-900/80 rounded-lg p-4 mb-6 border border-red-800/40 ring-1 ring-red-600/20">
-              <p className="text-red-100 font-bold">
-                You&apos;re tracking{' '}
-                <span className="font-black text-orange-200">{selectedServiceDetails.length} subscription{selectedServiceDetails.length !== 1 ? 's' : ''}</span>
+            <div className="bg-gradient-to-r from-indigo-950/60 to-slate-900/80 rounded-lg p-4 mb-6 border border-indigo-800/40 ring-1 ring-purple-600/20">
+              <p className="text-indigo-100 font-semibold">
+                You&apos;re mindfully tracking{' '}
+                <span className="font-bold text-purple-200">{selectedServiceDetails.length} subscription{selectedServiceDetails.length !== 1 ? 's' : ''}</span>
                 {' '}for group savings!
               </p>
             </div>
             
-            {/* Enhanced partnership message - Rebel twist */}
-            <div className="bg-gradient-to-r from-red-950/60 via-orange-950/50 to-red-950/60 rounded-lg p-6 border border-red-800/40 shadow-lg ring-1 ring-red-600/20">
+            {/* Enhanced wisdom message - Sage approach */}
+            <div className="bg-gradient-to-r from-indigo-950/60 via-purple-950/50 to-indigo-950/60 rounded-lg p-6 border border-indigo-800/40 shadow-lg ring-1 ring-purple-600/20">
               <div className="flex items-start space-x-3">
                 <div className="flex-shrink-0">
-                  <div className="w-10 h-10 bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center text-white text-lg">
-                    🤝
+                  <div className="w-10 h-10 bg-gradient-to-br from-indigo-600 to-purple-600 rounded-full flex items-center justify-center text-white text-lg">
+                    🔮
                   </div>
                 </div>
                 <div className="text-left">
-                  <h3 className="font-bold text-orange-200 mb-3">Community power works</h3>
-                  <p className="text-sm text-red-100 leading-relaxed mb-3">
-                    We&apos;re building partnerships to get you group deals and exclusive discounts on your subscriptions. <span className="font-bold text-orange-200">Together we negotiate better</span> than any individual ever could.
+                  <h3 className="font-bold text-purple-200 mb-3">Collective wisdom grows</h3>
+                  <p className="text-sm text-indigo-100 leading-relaxed mb-3">
+                    We&apos;re cultivating partnerships that honor our shared journey toward financial clarity. <span className="font-bold text-purple-200">Together we transform understanding</span> into meaningful change.
                   </p>
-                  <p className="text-sm text-orange-300 font-bold">
-                    <span className="text-red-300">Stop paying full price.</span> Start saving together! 💪
+                  <p className="text-sm text-purple-300 font-bold">
+                    <span className="text-indigo-300">Embrace conscious choices.</span> Transform together! ✨
                   </p>
                 </div>
               </div>
@@ -243,47 +243,47 @@ export function ProgressPage() {
           </div>
         </div>
 
-        {/* Community invitation section */}
-        <div className="bg-gradient-to-r from-red-900/30 via-orange-900/30 to-red-900/30 rounded-2xl p-6 mb-6 border border-red-700/30 shadow-lg">
+        {/* Wisdom community invitation section */}
+        <div className="bg-gradient-to-r from-indigo-900/30 via-purple-900/30 to-indigo-900/30 rounded-2xl p-6 mb-6 border border-indigo-700/30 shadow-lg">
           <div className="text-center">
-            <div className="text-4xl mb-3">🚀</div>
-            <h3 className="font-bold text-orange-200 mb-3 text-lg">Invite Friends, Save More</h3>
+            <div className="text-4xl mb-3">🌟</div>
+            <h3 className="font-bold text-purple-200 mb-3 text-lg">Share the Path to Understanding</h3>
             <p className="text-sm text-slate-200 leading-relaxed mb-4">
-              Every person who joins increases our group buying power with companies. 
-              <span className="font-semibold text-orange-200">More members = better deals for everyone!</span>
+              Every person who joins deepens our collective wisdom and strengthens our shared voice. 
+              <span className="font-semibold text-purple-200">More wisdom seekers = greater transformation for all!</span>
             </p>
             
-            {/* Why invite others - value propositions */}
+            {/* Why invite others - wisdom propositions */}
             <div className="bg-slate-800/40 rounded-lg p-4 mb-4 text-left">
-              <h4 className="text-sm font-bold text-red-200 mb-2">Why your friends should join:</h4>
+              <h4 className="text-sm font-bold text-indigo-200 mb-2">What others discover on this path:</h4>
               <ul className="text-xs text-slate-300 space-y-1">
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Free to track subscriptions & find savings</span>
+                  <span className="text-blue-400 mr-2">✓</span>
+                  <span>Mindful tracking & financial awareness</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Access to exclusive group discounts</span>
+                  <span className="text-blue-400 mr-2">✓</span>
+                  <span>Access to collective wisdom & better choices</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Community-driven pricing power</span>
+                  <span className="text-blue-400 mr-2">✓</span>
+                  <span>Community of conscious financial growth</span>
                 </li>
               </ul>
             </div>
             
             <div className="flex items-center justify-center space-x-4 text-xs text-slate-300">
               <div className="flex items-center">
-                <span className="w-2 h-2 bg-red-400 rounded-full mr-2"></span>
-                <span>More members</span>
+                <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2"></span>
+                <span>More seekers</span>
               </div>
               <div className="flex items-center">
-                <span className="w-2 h-2 bg-orange-400 rounded-full mr-2"></span>
-                <span>Better deals</span>
+                <span className="w-2 h-2 bg-purple-400 rounded-full mr-2"></span>
+                <span>Deeper wisdom</span>
               </div>
               <div className="flex items-center">
-                <span className="w-2 h-2 bg-red-500 rounded-full mr-2"></span>
-                <span>Save together</span>
+                <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                <span>Transform together</span>
               </div>
             </div>
           </div>
@@ -296,8 +296,8 @@ export function ProgressPage() {
               // Web Share API or fallback copy link functionality
               if (navigator.share) {
                 navigator.share({
-                  title: 'Join SMPL for group savings!',
-                  text: 'Track your subscriptions and get group discounts! More members = better deals for everyone.',
+                  title: 'Discover Financial Wisdom with SMPL',
+                  text: 'Join a community focused on mindful financial choices and collective wisdom. Transform your relationship with money together.',
                   url: window.location.origin
                 })
               } else {
@@ -306,18 +306,18 @@ export function ProgressPage() {
                 setShowShareNotification(true)
               }
             }}
-            className="group relative w-full bg-gradient-to-r from-red-600 via-orange-500 to-red-700 hover:from-red-700 hover:via-orange-600 hover:to-red-800 text-white text-xl font-black py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-red-500/25 transform hover:scale-[1.03] active:scale-[0.97] ring-2 ring-orange-500/20 hover:ring-orange-400/40"
+            className="group relative w-full bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 hover:from-indigo-700 hover:via-purple-600 hover:to-blue-700 text-white text-xl font-semibold py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:scale-[1.03] active:scale-[0.97] ring-2 ring-purple-500/20 hover:ring-purple-400/40"
           >
             <span className="relative z-10 flex items-center justify-center">
-              🚀 INVITE FRIENDS
-              <svg className="w-6 h-6 ml-3 transition-transform group-hover:translate-x-1 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={3}>
+              ✨ Share Wisdom
+              <svg className="w-6 h-6 ml-3 transition-transform group-hover:translate-x-1 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z" />
               </svg>
             </span>
-            {/* Aggressive glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-            {/* Additional dramatic shadow */}
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-700 rounded-lg blur opacity-20"></div>
+            {/* Wisdom glow effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+            {/* Additional gentle shadow */}
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 rounded-lg blur opacity-20"></div>
           </button>
           
           <button
@@ -355,7 +355,7 @@ export function ProgressPage() {
           isOpen={showShareNotification}
           onClose={() => setShowShareNotification(false)}
           title="Link Copied!"
-          message="Share with friends to increase our group buying power! The more members, the better deals for everyone."
+          message="Share this path to financial wisdom with others. Together we create a community of mindful financial growth."
           type="success"
         />
       </div>

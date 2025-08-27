@@ -143,38 +143,38 @@ export function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Rebel floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Sage floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-md mx-auto relative z-10">
           {/* SMPL Logo */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
               smpl
             </h1>
           </div>
           
-          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
+          <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-8 shadow-2xl border border-indigo-900/40 ring-1 ring-purple-500/20">
             <div className="text-center mb-8">
               <div className="relative w-20 h-20 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
-                <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-20 blur-lg"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-xl">
                     <LoadingSpinner size="xl" />
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
-                Group discounts on insurance, internet, phones & more
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-3">
+                Discover clarity in your financial choices
               </h1>
-              <p className="text-orange-200 text-lg font-medium mb-4">
-                Save together
+              <p className="text-indigo-200 text-lg font-medium mb-4">
+                Grow wise together
               </p>
               <p className="text-slate-300 text-base">
-                Loading your dashboard...
+                Preparing your wisdom dashboard...
               </p>
             </div>
           </div>
@@ -190,47 +190,47 @@ export function Dashboard() {
 
   if (selectedServices.length === 0) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Rebel floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Sage floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-sm mx-auto text-center relative z-10">
           {/* SMPL Logo */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
               smpl
             </h1>
           </div>
           
-          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20 mb-8">
+          <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-8 shadow-2xl border border-indigo-900/40 ring-1 ring-purple-500/20 mb-8">
             <div className="relative w-32 h-32 mx-auto mb-8">
-              <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
-              <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-2xl">
-                <span className="text-5xl">📊</span>
+              <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-20 blur-lg"></div>
+              <div className="relative w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-2xl">
+                <span className="text-5xl">🌱</span>
               </div>
             </div>
             
-            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-4">
-              Group discounts on insurance, internet, phones & more
+            <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-4">
+              Discover clarity in your financial choices
             </h1>
-            <p className="text-orange-200 text-lg font-medium mb-4">
-              Save together
+            <p className="text-indigo-200 text-lg font-medium mb-4">
+              Grow wise together
             </p>
             
             <p className="text-lg text-slate-300 mb-8">
-              Add services to start tracking and get ready for group discounts
+              Begin your journey to financial wisdom by mindfully selecting your services
             </p>
           </div>
           
           <button
             onClick={handleAddServices}
-            className="group relative w-full bg-gradient-to-r from-red-600 via-orange-500 to-red-700 hover:from-red-700 hover:via-orange-600 hover:to-red-800 text-white text-xl font-bold py-5 px-8 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98] ring-2 ring-orange-500/20 hover:ring-orange-400/40"
+            className="group relative w-full bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 hover:from-indigo-700 hover:via-purple-600 hover:to-blue-700 text-white text-xl font-semibold py-5 px-8 rounded-2xl transition-all duration-300 shadow-xl hover:shadow-2xl transform hover:scale-[1.02] active:scale-[0.98] ring-2 ring-purple-500/20 hover:ring-purple-400/40"
           >
-            <span className="relative z-10">Add Services</span>
-            <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
+            <span className="relative z-10">Begin Discovery</span>
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400 rounded-2xl blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300"></div>
           </button>
           
           {/* live.smpl Branding */}
@@ -243,17 +243,17 @@ export function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black py-6 sm:py-8 px-4 sm:px-6 relative overflow-hidden">
-      {/* Rebel floating background elements */}
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 py-6 sm:py-8 px-4 sm:px-6 relative overflow-hidden">
+      {/* Sage floating background elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
       </div>
       
       <div className="max-w-4xl mx-auto relative z-10">
         {/* SMPL Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+          <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
             smpl
           </h1>
         </div>
@@ -261,17 +261,17 @@ export function Dashboard() {
         {/* Enhanced Header */}
         <div className="text-center mb-12">
           
-          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-4">
-            Group discounts on insurance, internet, phones & more
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-4">
+            Discover clarity in your financial choices
           </h1>
-          <p className="text-lg sm:text-xl text-orange-200 font-medium">
-            Save together
+          <p className="text-lg sm:text-xl text-indigo-200 font-medium">
+            Grow wise together
           </p>
           
           {/* Community Status Badge */}
-          <div className="inline-flex items-center bg-gradient-to-r from-red-950/60 to-orange-950/50 border border-red-700/50 rounded-lg px-4 py-2 mt-4 ring-1 ring-red-600/20">
-            <span className="text-lg mr-2">🤝</span>
-            <span className="text-sm text-orange-200 font-bold">COMMUNITY MEMBER</span>
+          <div className="inline-flex items-center bg-gradient-to-r from-indigo-950/60 to-purple-950/50 border border-indigo-700/50 rounded-lg px-4 py-2 mt-4 ring-1 ring-purple-600/20">
+            <span className="text-lg mr-2">🌟</span>
+            <span className="text-sm text-purple-200 font-semibold">WISDOM SEEKER</span>
           </div>
         </div>
 
@@ -297,9 +297,9 @@ export function Dashboard() {
                 <span className="text-2xl text-white">✅</span>
               </div>
               <div className="text-3xl sm:text-4xl font-black bg-gradient-to-r from-emerald-600 to-green-600 bg-clip-text text-transparent mb-2">
-                Ready
+                Aware
               </div>
-              <div className="text-sm font-semibold text-slate-200">For Group Discounts</div>
+              <div className="text-sm font-semibold text-slate-200">Financial Clarity</div>
             </div>
           </div>
         </div>
@@ -308,9 +308,9 @@ export function Dashboard() {
         <div className="mb-12">
           <div className="text-center mb-8">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-200 to-slate-200 bg-clip-text text-transparent mb-2">
-              Your Services
+              Your Mindful Choices
             </h2>
-            <p className="text-slate-200">Manage your subscriptions</p>
+            <p className="text-slate-200">Understanding your financial patterns</p>
           </div>
           
           <div className="grid gap-4">
@@ -378,7 +378,7 @@ export function Dashboard() {
                         style={{ minWidth: '44px', minHeight: '44px' }}
                       >
                         {isRemoving ? (
-                          <LoadingSpinner size="sm" color="red" />
+                          <LoadingSpinner size="sm" color="white" />
                         ) : (
                           <svg className="w-4 h-4 transition-transform group-hover/btn:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -393,70 +393,70 @@ export function Dashboard() {
           </div>
         </div>
 
-        {/* Community Growth Education */}
-        <div className="mb-8 bg-gradient-to-r from-red-900/20 via-orange-900/20 to-red-900/20 rounded-2xl p-6 border border-red-700/30">
+        {/* Wisdom Community Education */}
+        <div className="mb-8 bg-gradient-to-r from-indigo-900/20 via-purple-900/20 to-indigo-900/20 rounded-2xl p-6 border border-indigo-700/30">
           <div className="text-center">
-            <div className="text-3xl mb-3">🚀</div>
-            <h3 className="text-lg font-bold text-orange-200 mb-3">Grow Our Community, Increase Everyone&apos;s Savings</h3>
+            <div className="text-3xl mb-3">🌟</div>
+            <h3 className="text-lg font-bold text-indigo-200 mb-3">Together We Transform Our Financial Understanding</h3>
             
-            {/* Urgency messaging */}
+            {/* Wisdom messaging */}
             <div className="bg-slate-800/40 rounded-lg p-4 mb-4">
-              <p className="text-sm text-red-200 font-bold mb-2">⏰ Limited Time: Community Building Phase</p>
-              <p className="text-xs text-slate-300">The more members we get now, the stronger our group discounts will be!</p>
+              <p className="text-sm text-purple-200 font-semibold mb-2">✨ The Path to Collective Wisdom</p>
+              <p className="text-xs text-slate-300">When more people gain financial clarity, we all benefit from shared insights and stronger collective voice.</p>
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
               <div className="text-center">
-                <div className="text-2xl mb-2">👥</div>
-                <p className="text-sm text-slate-300"><span className="font-semibold text-red-200">More Members</span></p>
-                <p className="text-xs text-slate-300">Stronger negotiating power</p>
+                <div className="text-2xl mb-2">🤝</div>
+                <p className="text-sm text-slate-300"><span className="font-semibold text-indigo-200">Shared Wisdom</span></p>
+                <p className="text-xs text-slate-300">Collective understanding</p>
               </div>
               <div className="text-center">
-                <div className="text-2xl mb-2">💰</div>
-                <p className="text-sm text-slate-300"><span className="font-semibold text-orange-200">Better Deals</span></p>
-                <p className="text-xs text-slate-300">Lower prices for all</p>
+                <div className="text-2xl mb-2">🌱</div>
+                <p className="text-sm text-slate-300"><span className="font-semibold text-purple-200">Growth Together</span></p>
+                <p className="text-xs text-slate-300">Mutual transformation</p>
               </div>
               <div className="text-center">
-                <div className="text-2xl mb-2">🎆</div>
-                <p className="text-sm text-slate-300"><span className="font-semibold text-yellow-200">Exclusive Access</span></p>
-                <p className="text-xs text-slate-300">Community-only discounts</p>
+                <div className="text-2xl mb-2">🎯</div>
+                <p className="text-sm text-slate-300"><span className="font-semibold text-blue-200">Clearer Choices</span></p>
+                <p className="text-xs text-slate-300">Informed decisions</p>
               </div>
             </div>
             
             {/* Benefits for invitees */}
             <div className="bg-slate-800/40 rounded-lg p-4 mb-4 text-left">
-              <h4 className="text-sm font-bold text-orange-200 mb-2">What your friends get when they join:</h4>
+              <h4 className="text-sm font-bold text-indigo-200 mb-2">What others discover when they join:</h4>
               <ul className="text-xs text-slate-200 space-y-1">
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Free subscription tracking & management</span>
+                  <span className="text-blue-400 mr-2">✓</span>
+                  <span>Mindful financial tracking & insights</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Access to exclusive group discounts</span>
+                  <span className="text-blue-400 mr-2">✓</span>
+                  <span>Access to collective wisdom & better choices</span>
                 </li>
                 <li className="flex items-start">
-                  <span className="text-green-400 mr-2">✓</span>
-                  <span>Community-driven savings power</span>
+                  <span className="text-blue-400 mr-2">✓</span>
+                  <span>Community of conscious financial growth</span>
                 </li>
               </ul>
             </div>
             
             <p className="text-sm text-slate-200 leading-relaxed">
-              Every friend you invite increases <span className="font-semibold text-orange-200">everyone&apos;s</span> savings potential. Together we save more!
+              Each person who joins strengthens our collective understanding and creates <span className="font-semibold text-purple-200">better opportunities for all</span>.
             </p>
           </div>
         </div>
 
-        {/* Enhanced Actions with Community Focus (flipped CTAs) */}
+        {/* Enhanced Actions with Wisdom Focus */}
         <div className="space-y-4">
           <button
             onClick={() => {
               // Web Share API with fallback
               if (navigator.share) {
                 navigator.share({
-                  title: 'Join SMPL for group savings!',
-                  text: 'Track your subscriptions and get group discounts! More members = better deals for everyone. Free to join!',
+                  title: 'Discover Financial Wisdom with SMPL',
+                  text: 'Join a community focused on mindful financial choices and collective wisdom. Transform your relationship with money together.',
                   url: window.location.origin
                 }).catch(() => {
                   // Fallback if share is cancelled - copy to clipboard
@@ -469,15 +469,15 @@ export function Dashboard() {
                 setShowShareNotification(true)
               }
             }}
-            className="group relative w-full bg-gradient-to-r from-red-600 via-orange-500 to-red-700 hover:from-red-700 hover:via-orange-600 hover:to-red-800 text-white text-xl font-black py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-red-500/25 transform hover:scale-[1.03] active:scale-[0.97] ring-2 ring-orange-500/20 hover:ring-orange-400/40"
+            className="group relative w-full bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 hover:from-indigo-700 hover:via-purple-600 hover:to-blue-700 text-white text-xl font-semibold py-6 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:scale-[1.03] active:scale-[0.97] ring-2 ring-purple-500/20 hover:ring-purple-400/40"
           >
             <span className="relative z-10 flex items-center justify-center">
-              <span className="text-2xl mr-3">🚀</span>
-              INVITE FRIENDS
+              <span className="text-2xl mr-3">✨</span>
+              Share Wisdom
             </span>
             {/* Glow effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-red-400 via-orange-400 to-red-500 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
-            <div className="absolute inset-0 bg-gradient-to-r from-red-600 via-orange-500 to-red-700 rounded-lg blur opacity-20"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-400 rounded-lg blur-lg opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 rounded-lg blur opacity-20"></div>
           </button>
           
           <button
@@ -488,7 +488,7 @@ export function Dashboard() {
               <svg className="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
               </svg>
-              Add More Services
+              Explore More Services
             </span>
           </button>
         </div>
@@ -518,7 +518,7 @@ export function Dashboard() {
           isOpen={showShareNotification}
           onClose={() => setShowShareNotification(false)}
           title="Link Copied!"
-          message="Share with friends to increase our group buying power! The more members, the better deals for everyone."
+          message="Share this path to financial wisdom with others. Together we create a community of mindful financial growth."
           type="success"
         />
         

@@ -54,20 +54,20 @@ export function CategoriesPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
         {/* Floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-sm mx-auto text-center relative z-10">
           <div className="backdrop-blur-sm bg-slate-800/90 rounded-3xl p-10 shadow-2xl border border-slate-700/50">
             <div className="relative mb-8">
-              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-red-600 to-orange-600 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg">
                 <LoadingSpinner size="xl" />
               </div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-orange-200 to-red-200 bg-clip-text text-transparent mb-2">
+              <h3 className="text-xl font-bold bg-gradient-to-r from-purple-200 to-indigo-200 bg-clip-text text-transparent mb-2">
                 Loading categories...
               </h3>
               <p className="text-slate-300">Preparing your options</p>
@@ -81,7 +81,7 @@ export function CategoriesPage() {
   if (error) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
-        <p className="text-red-600 mb-4">{error}</p>
+        <p className="text-red-400 mb-4">{error}</p>
         <button
           onClick={handleRetry}
           className="px-4 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"

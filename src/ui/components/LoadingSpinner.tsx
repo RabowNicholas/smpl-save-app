@@ -2,7 +2,7 @@
 
 interface LoadingSpinnerProps {
   size?: 'sm' | 'md' | 'lg' | 'xl'
-  color?: 'white' | 'red' | 'orange' | 'blue'
+  color?: 'white' | 'indigo' | 'purple' | 'blue'
   className?: string
 }
 
@@ -20,8 +20,8 @@ export function LoadingSpinner({
   
   const colorClasses = {
     white: 'border-white border-t-transparent',
-    red: 'border-red-400 border-t-transparent',
-    orange: 'border-orange-400 border-t-transparent',
+    indigo: 'border-indigo-400 border-t-transparent',
+    purple: 'border-purple-400 border-t-transparent',
     blue: 'border-blue-400 border-t-transparent'
   }
   
@@ -37,7 +37,7 @@ export function LoadingSpinner({
 interface LoadingStateProps {
   message?: string
   size?: 'sm' | 'md' | 'lg' | 'xl'
-  color?: 'white' | 'red' | 'orange' | 'blue'
+  color?: 'white' | 'indigo' | 'purple' | 'blue'
   className?: string
 }
 
@@ -58,7 +58,7 @@ export function LoadingState({
 interface InlineLoadingProps {
   message?: string
   size?: 'sm' | 'md' | 'lg' | 'xl'
-  color?: 'white' | 'red' | 'orange' | 'blue'
+  color?: 'white' | 'indigo' | 'purple' | 'blue'
   className?: string
 }
 
@@ -79,7 +79,7 @@ export function InlineLoading({
 interface ButtonLoadingProps {
   message?: string
   size?: 'sm' | 'md' | 'lg' | 'xl'
-  color?: 'white' | 'red' | 'orange' | 'blue'
+  color?: 'white' | 'indigo' | 'purple' | 'blue'
   className?: string
 }
 

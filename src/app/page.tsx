@@ -129,35 +129,35 @@ export default function Home() {
   // Show loading screen while checking authentication
   if (isCheckingAuth) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Rebel floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Sage floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-md mx-auto relative z-10">
           {/* SMPL Logo */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent animate-pulse">
               smpl
             </h1>
           </div>
           
-          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
+          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-indigo-900/30 ring-1 ring-purple-500/20">
             <div className="text-center mb-8">
               <div className="relative w-20 h-20 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
-                <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-20 blur-lg"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-xl">
                   <div className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent" />
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
-                Group discounts on insurance, internet, phones & more
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-3">
+                Discover clarity in your financial choices
               </h1>
-              <p className="text-orange-200 text-lg font-medium mb-4">
-                Save together
+              <p className="text-indigo-200 text-lg font-medium mb-4">
+                Grow wise together
               </p>
               <p className="text-slate-300 text-base">
                 Loading your account...
@@ -266,35 +266,35 @@ function AppContent() {
   // Show loading while determining user state
   if (isLoadingUserData) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-red-950 to-black flex items-center justify-center px-6 relative overflow-hidden">
-        {/* Rebel floating background elements */}
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-900 flex items-center justify-center px-6 relative overflow-hidden">
+        {/* Sage floating background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-red-500/10 to-orange-600/10 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-orange-500/10 to-red-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute top-20 right-20 w-64 h-64 bg-gradient-to-br from-blue-500/8 to-purple-600/8 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-20 left-20 w-64 h-64 bg-gradient-to-tr from-purple-500/8 to-blue-600/8 rounded-full blur-3xl"></div>
         </div>
         
         <div className="max-w-md mx-auto relative z-10">
           {/* SMPL Logo */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-red-600 via-orange-500 to-red-700 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent animate-pulse">
               smpl
             </h1>
           </div>
           
-          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-red-900/30 ring-1 ring-red-500/20">
+          <div className="backdrop-blur-sm bg-slate-900/95 rounded-2xl p-8 shadow-2xl border border-indigo-900/30 ring-1 ring-purple-500/20">
             <div className="text-center mb-8">
               <div className="relative w-20 h-20 mx-auto mb-6">
-                <div className="absolute inset-0 bg-gradient-to-br from-red-600 to-orange-600 rounded-full opacity-20 blur-lg"></div>
-                <div className="relative w-full h-full bg-gradient-to-br from-red-600 to-orange-600 rounded-full flex items-center justify-center shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full opacity-20 blur-lg"></div>
+                <div className="relative w-full h-full bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center shadow-xl">
                   <div className="animate-spin rounded-full h-8 w-8 border-2 border-white border-t-transparent" />
                 </div>
               </div>
               
-              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-orange-200 via-red-300 to-orange-200 bg-clip-text text-transparent mb-3">
-                Group discounts on insurance, internet, phones & more
+              <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-3">
+                Discover clarity in your financial choices
               </h1>
-              <p className="text-orange-200 text-lg font-medium mb-4">
-                Save together
+              <p className="text-indigo-200 text-lg font-medium mb-4">
+                Grow wise together
               </p>
               <p className="text-slate-300 text-base">
                 Setting up your dashboard...
