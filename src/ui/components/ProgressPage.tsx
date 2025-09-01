@@ -186,11 +186,11 @@ export function ProgressPage() {
             </div>
             
             <h1 className="text-xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-2">
-              You're all set!
+              You&apos;re all set!
             </h1>
             
             <p className="text-base text-indigo-200 font-medium mb-3">
-              You're tracking
+              You&apos;re tracking
             </p>
             
             {/* Service count */}
@@ -209,11 +209,11 @@ export function ProgressPage() {
             
             <div className="bg-gradient-to-r from-indigo-950/60 to-slate-900/80 rounded-lg p-3 border border-indigo-800/40 ring-1 ring-purple-600/20">
               <p className="text-sm text-indigo-100 font-semibold">
-                We're negotiating better rates for your{' '}
+                We&apos;re negotiating better rates for your{' '}
                 <span className="font-bold text-purple-200">{selectedServiceDetails.length + selectedCustomServices.length} service{(selectedServiceDetails.length + selectedCustomServices.length) !== 1 ? 's' : ''}</span>
               </p>
               <p className="text-xs text-purple-300 mt-1">
-                No fees, just savings. We'll be in touch! 💰
+                No fees, just savings. We&apos;ll be in touch! 💰
               </p>
             </div>
           </div>
