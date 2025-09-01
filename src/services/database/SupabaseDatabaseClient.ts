@@ -5,6 +5,8 @@ import {
   Service,
   Category,
   User,
+  CustomService,
+  UserCustomService,
 } from "@/core/types";
 import { createUser } from "@/core/entities/User";
 
@@ -152,5 +154,123 @@ export class SupabaseDatabaseClient implements DatabaseClient {
       createdAt: new Date(data.created_at),
       updatedAt: new Date(data.updated_at),
     };
+  }
+
+  async saveCustomService(customService: Omit<CustomService, 'id' | 'createdAt'>): Promise<CustomService> {
+    // Use service client to bypass RLS for custom service operations during phone auth
+    const serviceClient = createServiceClient();
+
+    const { data, error } = await serviceClient
+      .from("custom_services")
+      .insert({
+        user_id: customService.userId,
+        name: customService.name,
+        category_id: customService.categoryId,
+        created_at: new Date().toISOString(),
+      })
+      .select()
+      .single();
+
+    if (error) {
+      throw new Error(`Failed to save custom service: ${error.message}`);
+    }
+
+    return {
+      id: data.id,
+      userId: data.user_id,
+      name: data.name,
+      categoryId: data.category_id,
+      createdAt: new Date(data.created_at),
+    };
+  }
+
+  async getUserCustomServices(userId: string): Promise<CustomService[]> {
+    // Use service client to bypass RLS for custom service operations during phone auth
+    const serviceClient = createServiceClient();
+
+    const { data, error } = await serviceClient
+      .from("custom_services")
+      .select("*")
+      .eq("user_id", userId);
+
+    if (error) {
+      throw new Error(`Failed to fetch user custom services: ${error.message}`);
+    }
+
+    return (data || []).map((row) => ({
+      id: row.id,
+      userId: row.user_id,
+      name: row.name,
+      categoryId: row.category_id,
+      createdAt: new Date(row.created_at),
+    }));
+  }
+
+  async removeCustomService(userId: string, customServiceId: string): Promise<void> {
+    // Use service client to bypass RLS for custom service operations during phone auth
+    const serviceClient = createServiceClient();
+
+    const { data, error } = await serviceClient
+      .from("custom_services")
+      .delete()
+      .eq("user_id", userId)
+      .eq("id", customServiceId);
+
+    if (error) {
+      throw new Error(`Failed to remove custom service: ${error.message}`);
+    }
+  }
+
+  async saveUserCustomService(userCustomService: UserCustomService): Promise<void> {
+    // Use service client to bypass RLS for user custom service operations during phone auth
+    const serviceClient = createServiceClient();
+
+    const { data, error } = await serviceClient
+      .from("user_custom_services")
+      .insert({
+        user_id: userCustomService.userId,
+        custom_service_id: userCustomService.customServiceId,
+        created_at: userCustomService.createdAt.toISOString(),
+      })
+      .select();
+
+    if (error) {
+      throw new Error(`Failed to save user custom service: ${error.message}`);
+    }
+  }
+
+  async removeUserCustomService(userId: string, customServiceId: string): Promise<void> {
+    // Use service client to bypass RLS for user custom service operations during phone auth
+    const serviceClient = createServiceClient();
+
+    const { data, error } = await serviceClient
+      .from("user_custom_services")
+      .delete()
+      .eq("user_id", userId)
+      .eq("custom_service_id", customServiceId);
+
+    if (error) {
+      throw new Error(`Failed to remove user custom service: ${error.message}`);
+    }
+  }
+
+  async getUserCustomServiceSelections(userId: string): Promise<UserCustomService[]> {
+    // Use service client to bypass RLS for user custom service operations during phone auth
+    const serviceClient = createServiceClient();
+
+    const { data, error } = await serviceClient
+      .from("user_custom_services")
+      .select("*")
+      .eq("user_id", userId);
+
+    if (error) {
+      throw new Error(`Failed to fetch user custom service selections: ${error.message}`);
+    }
+
+    return (data || []).map((row) => ({
+      userId: row.user_id,
+      customServiceId: row.custom_service_id,
+      createdAt: new Date(row.created_at),
+    }));
   }
 }

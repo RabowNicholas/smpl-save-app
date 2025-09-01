@@ -39,12 +39,34 @@ CREATE TABLE user_services (
   UNIQUE(user_id, service_id)
 );
 
+-- Custom services table for user-created services
+CREATE TABLE custom_services (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  name VARCHAR(200) NOT NULL,
+  category_id UUID NOT NULL REFERENCES categories(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Junction table for user custom service selections
+CREATE TABLE user_custom_services (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+  custom_service_id UUID NOT NULL REFERENCES custom_services(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  UNIQUE(user_id, custom_service_id)
+);
+
 -- Indexes for performance
 CREATE INDEX idx_services_category_id ON services(category_id);
 CREATE INDEX idx_services_featured ON services(is_featured) WHERE is_featured = TRUE;
 CREATE INDEX idx_user_services_user_id ON user_services(user_id);
 CREATE INDEX idx_user_services_service_id ON user_services(service_id);
 CREATE INDEX idx_users_phone ON users(phone);
+CREATE INDEX idx_custom_services_user_id ON custom_services(user_id);
+CREATE INDEX idx_custom_services_category_id ON custom_services(category_id);
+CREATE INDEX idx_user_custom_services_user_id ON user_custom_services(user_id);
+CREATE INDEX idx_user_custom_services_custom_service_id ON user_custom_services(custom_service_id);
 
 -- Updated_at trigger function
 CREATE OR REPLACE FUNCTION update_updated_at_column()

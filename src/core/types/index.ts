@@ -21,9 +21,23 @@ export interface Service {
   isFeatured: boolean
 }
 
+export interface CustomService {
+  id: string
+  userId: string
+  name: string
+  categoryId: string
+  createdAt: Date
+}
+
 export interface UserService {
   userId: string
   serviceId: string
+  createdAt: Date
+}
+
+export interface UserCustomService {
+  userId: string
+  customServiceId: string
   createdAt: Date
 }
 
@@ -46,6 +60,12 @@ export interface DatabaseClient {
   getAllCategories(): Promise<Category[]>
   createUser(phone: string): Promise<User>
   getUserByPhone(phone: string): Promise<User | null>
+  saveCustomService(customService: Omit<CustomService, 'id' | 'createdAt'>): Promise<CustomService>
+  getUserCustomServices(userId: string): Promise<CustomService[]>
+  removeCustomService(userId: string, customServiceId: string): Promise<void>
+  saveUserCustomService(userCustomService: UserCustomService): Promise<void>
+  removeUserCustomService(userId: string, customServiceId: string): Promise<void>
+  getUserCustomServiceSelections(userId: string): Promise<UserCustomService[]>
 }
 
 export interface AnalyticsTracker {

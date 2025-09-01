@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { useApp } from '@/ui/context/AppContext'
-import { Service } from '@/core/types'
+import { Service, CustomService } from '@/core/types'
 import { InlineLoading, ButtonLoading } from './LoadingSpinner'
 import { ProgressIndicator } from './ProgressIndicator'
 
@@ -50,11 +50,13 @@ export function VisualServicesPage() {
   // Removed unused popularServices state
   const [servicesByCategory, setServicesByCategory] = useState<Record<string, Service[]>>({})
   const [categories, setCategories] = useState<Array<{id: string, name: string, icon: string}>>([])
-  const [customServices, setCustomServices] = useState<Record<string, string>>({})
+  const [customServices, setCustomServices] = useState<CustomService[]>([])
+  const [customServicesByCategory, setCustomServicesByCategory] = useState<Record<string, CustomService[]>>({})
   const [showOtherInputs, setShowOtherInputs] = useState<Record<string, boolean>>({})
   const [logoErrors, setLogoErrors] = useState<Record<string, boolean>>({})
   const [searchQuery, setSearchQuery] = useState('')
   const [filteredServicesByCategory, setFilteredServicesByCategory] = useState<Record<string, Service[]>>({})
+  const [filteredCustomServicesByCategory, setFilteredCustomServicesByCategory] = useState<Record<string, CustomService[]>>({})
 
   useEffect(() => {
     loadAllServices()
@@ -64,6 +66,7 @@ export function VisualServicesPage() {
   useEffect(() => {
     if (!searchQuery.trim()) {
       setFilteredServicesByCategory(servicesByCategory)
+      setFilteredCustomServicesByCategory(customServicesByCategory)
     } else {
       const filtered: Record<string, Service[]> = {}
       Object.entries(servicesByCategory).forEach(([categoryId, services]) => {
@@ -75,8 +78,19 @@ export function VisualServicesPage() {
         }
       })
       setFilteredServicesByCategory(filtered)
+
+      const filteredCustom: Record<string, CustomService[]> = {}
+      Object.entries(customServicesByCategory).forEach(([categoryId, customServices]) => {
+        const filteredCustomServices = customServices.filter(customService => 
+          customService.name.toLowerCase().includes(searchQuery.toLowerCase())
+        )
+        if (filteredCustomServices.length > 0) {
+          filteredCustom[categoryId] = filteredCustomServices
+        }
+      })
+      setFilteredCustomServicesByCategory(filteredCustom)
     }
-  }, [searchQuery, servicesByCategory])
+  }, [searchQuery, servicesByCategory, customServicesByCategory])
 
   const loadAllServices = async () => {
     setServicesLoading(true)
@@ -113,6 +127,28 @@ export function VisualServicesPage() {
         return acc
       }, {})
       setServicesByCategory(grouped)
+
+      // Load user's custom services if user is logged in
+      if (user) {
+        try {
+          const customServicesResponse = await fetch(`/api/custom-services?userId=${user.id}`)
+          if (customServicesResponse.ok) {
+            const customServicesResult = await customServicesResponse.json()
+            const userCustomServices = customServicesResult.customServices || []
+            setCustomServices(userCustomServices)
+
+            // Group custom services by category
+            const groupedCustomServices = categoriesResult.categories.reduce((acc: Record<string, CustomService[]>, category: {id: string, name: string, icon: string}) => {
+              const categoryCustomServices = userCustomServices.filter((customService: CustomService) => customService.categoryId === category.id)
+              acc[category.id] = categoryCustomServices
+              return acc
+            }, {})
+            setCustomServicesByCategory(groupedCustomServices)
+          }
+        } catch (error) {
+          console.error('Failed to load custom services:', error)
+        }
+      }
       
     } catch (error) {
       console.error('Failed to load services:', error)
@@ -143,9 +179,12 @@ export function VisualServicesPage() {
     setSavingChanges(true)
     
     try {
-      // Save all selected services
+      // Separate regular services from custom services
+      const customServiceIds = customServices.map(cs => cs.id)
+      
+      // Save selected regular services
       for (const serviceId of localSelectedServices) {
-        if (!selectedServices.includes(serviceId)) {
+        if (!customServiceIds.includes(serviceId) && !selectedServices.includes(serviceId)) {
           const response = await fetch('/api/user-services', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -157,15 +196,31 @@ export function VisualServicesPage() {
           }
         }
       }
+
+      // Custom services are already saved when created via handleCustomServiceAdd
+      // Just need to handle deselection of custom services
       
-      // Remove unselected services
+      // Remove unselected regular services
       for (const serviceId of selectedServices) {
-        if (!localSelectedServices.includes(serviceId)) {
+        if (!customServiceIds.includes(serviceId) && !localSelectedServices.includes(serviceId)) {
           const response = await fetch(`/api/user-services?userId=${user.id}&serviceId=${serviceId}`, {
             method: 'DELETE'
           })
           if (!response.ok) {
             console.error(`Failed to remove service ${serviceId}:`, response.status, response.statusText)
+            // Continue with other services instead of failing entirely
+          }
+        }
+      }
+
+      // Remove unselected custom services
+      for (const customService of customServices) {
+        if (!localSelectedServices.includes(customService.id)) {
+          const response = await fetch(`/api/custom-services?userId=${user.id}&customServiceId=${customService.id}`, {
+            method: 'DELETE'
+          })
+          if (!response.ok) {
+            console.error(`Failed to remove custom service ${customService.id}:`, response.status, response.statusText)
             // Continue with other services instead of failing entirely
           }
         }
@@ -188,23 +243,45 @@ export function VisualServicesPage() {
     return localSelectedServices.includes(serviceId)
   }
 
-  const handleCustomServiceAdd = (categoryId: string, serviceName: string) => {
-    if (!serviceName.trim()) return
+  const handleCustomServiceAdd = async (categoryId: string, serviceName: string) => {
+    if (!serviceName.trim() || !user) return
     
-    // Create a temporary service ID for custom services
-    const customServiceId = `custom-${categoryId}-${Date.now()}`
-    
-    // Add to local selected services
-    setLocalSelectedServices(prev => [...prev, customServiceId])
-    
-    // Store custom service info
-    setCustomServices(prev => ({
-      ...prev,
-      [customServiceId]: serviceName.trim()
-    }))
-    
-    // Hide the input and clear it
-    setShowOtherInputs(prev => ({ ...prev, [categoryId]: false }))
+    try {
+      const response = await fetch('/api/custom-services', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user.id,
+          name: serviceName.trim(),
+          categoryId
+        })
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to create custom service')
+      }
+
+      const result = await response.json()
+      const newCustomService = result.customService
+
+      // Add to local custom services state
+      setCustomServices(prev => [...prev, newCustomService])
+
+      // Update custom services by category
+      setCustomServicesByCategory(prev => ({
+        ...prev,
+        [categoryId]: [...(prev[categoryId] || []), newCustomService]
+      }))
+
+      // Add to selected services
+      setLocalSelectedServices(prev => [...prev, newCustomService.id])
+      
+      // Hide the input and clear it
+      setShowOtherInputs(prev => ({ ...prev, [categoryId]: false }))
+    } catch (error) {
+      console.error('Failed to add custom service:', error)
+      // You could add error handling UI here
+    }
   }
 
   const handleOtherInputKeyPress = (e: React.KeyboardEvent<HTMLInputElement>, categoryId: string) => {
@@ -226,7 +303,7 @@ export function VisualServicesPage() {
       <div className="max-w-4xl mx-auto relative z-10">
         {/* SMPL Logo */}
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-black text-yellow-400">
             smpl
           </h1>
         </div>
@@ -242,16 +319,16 @@ export function VisualServicesPage() {
         <div className="text-center mb-16">
           
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-4 leading-tight">
-            Discover clarity in your financial choices
+            Select your services
           </h1>
           <p className="text-indigo-200 text-lg font-medium mb-4">
-            Grow wise together
+            Choose the services you want to save money on
           </p>
           <p className="text-lg sm:text-xl text-slate-200 font-medium">
             {servicesLoading ? (
-              <InlineLoading message="Preparing your options..." size="md" color="indigo" />
+              <InlineLoading message="Loading your options..." size="md" color="indigo" />
             ) : (
-              'Choose mindfully the services that serve your life'
+              'We\'ll help you get better rates on these services'
             )}
           </p>
         </div>
@@ -288,7 +365,7 @@ export function VisualServicesPage() {
             {searchQuery && (
               <div className="mt-2 text-center">
                 <span className="text-sm text-slate-300">
-                  {Object.values(filteredServicesByCategory).flat().length} service{Object.values(filteredServicesByCategory).flat().length !== 1 ? 's' : ''} found
+                  {Object.values(filteredServicesByCategory).flat().length + Object.values(filteredCustomServicesByCategory).flat().length} service{(Object.values(filteredServicesByCategory).flat().length + Object.values(filteredCustomServicesByCategory).flat().length) !== 1 ? 's' : ''} found
                 </span>
               </div>
             )}
@@ -445,13 +522,11 @@ export function VisualServicesPage() {
                   })}
                   
                   {/* Custom Services for this category */}
-                  {Object.entries(customServices)
-                    .filter(([id]) => id.includes(categoryId))
-                    .map(([customId, serviceName]) => {
-                      const selected = localSelectedServices.includes(customId)
+                  {(filteredCustomServicesByCategory[categoryId] || []).map((customService) => {
+                      const selected = localSelectedServices.includes(customService.id)
                       return (
                         <div
-                          key={customId}
+                          key={customService.id}
                           className={`
                             group relative p-4 sm:p-6 rounded-2xl transition-all duration-500
                             ${selected 
@@ -474,7 +549,7 @@ export function VisualServicesPage() {
                             <h3 className={`font-semibold text-xs sm:text-sm leading-tight ${
                               selected ? 'text-white' : 'text-slate-200'
                             }`}>
-                              {serviceName}
+                              {customService.name}
                             </h3>
                             
                             {/* Selection indicator */}
@@ -516,10 +591,10 @@ export function VisualServicesPage() {
               >
                 <span className="relative z-10 flex items-center justify-center">
                   {savingChanges ? (
-                    <ButtonLoading message="Reflecting..." size="md" />
+                    <ButtonLoading message="Saving..." size="md" />
                   ) : (
                     <>
-                      Continue Journey
+                      Continue
                       <svg className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                       </svg>

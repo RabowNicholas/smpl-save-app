@@ -1,7 +1,7 @@
 'use client'
 
 import { createContext, useContext, useReducer, ReactNode } from 'react'
-import { User, Category, Service, UserService } from '@/core/types'
+import { User, Category, Service, UserService, CustomService } from '@/core/types'
 
 export type AppStep = 'welcome' | 'visual-services' | 'progress' | 'dashboard'
 
@@ -11,6 +11,7 @@ export interface AppState {
   selectedCategory: Category | null
   categories: Category[]
   services: Service[]
+  customServices: CustomService[]
   userServices: UserService[]
   selectedServices: string[]
   loading: boolean
@@ -23,6 +24,9 @@ export type AppAction =
   | { type: 'SET_SELECTED_CATEGORY'; payload: Category | null }
   | { type: 'SET_CATEGORIES'; payload: Category[] }
   | { type: 'SET_SERVICES'; payload: Service[] }
+  | { type: 'SET_CUSTOM_SERVICES'; payload: CustomService[] }
+  | { type: 'ADD_CUSTOM_SERVICE'; payload: CustomService }
+  | { type: 'REMOVE_CUSTOM_SERVICE'; payload: string }
   | { type: 'SET_USER_SERVICES'; payload: UserService[] }
   | { type: 'SET_SELECTED_SERVICES'; payload: string[] }
   | { type: 'TOGGLE_SERVICE'; payload: string }
@@ -36,6 +40,7 @@ const initialState: AppState = {
   selectedCategory: null,
   categories: [],
   services: [],
+  customServices: [],
   userServices: [],
   selectedServices: [],
   loading: false,
@@ -58,6 +63,23 @@ function appReducer(state: AppState, action: AppAction): AppState {
     
     case 'SET_SERVICES':
       return { ...state, services: action.payload }
+    
+    case 'SET_CUSTOM_SERVICES':
+      return { ...state, customServices: action.payload }
+    
+    case 'ADD_CUSTOM_SERVICE':
+      return { 
+        ...state, 
+        customServices: [...state.customServices, action.payload],
+        selectedServices: [...state.selectedServices, action.payload.id]
+      }
+    
+    case 'REMOVE_CUSTOM_SERVICE':
+      return { 
+        ...state, 
+        customServices: state.customServices.filter(cs => cs.id !== action.payload),
+        selectedServices: state.selectedServices.filter(id => id !== action.payload)
+      }
     
     case 'SET_USER_SERVICES':
       const serviceIds = action.payload.map(us => us.serviceId)

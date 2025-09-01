@@ -33,25 +33,23 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
               <div className="absolute -inset-2 bg-gradient-to-r from-indigo-400/30 to-purple-600/30 rounded-full blur-lg animate-pulse"></div>
             </div>
             
-            {/* Sage Community Messaging */}
             <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-4 leading-tight">
-              Discover clarity in your financial choices
+              Stop overpaying on bills
             </h1>
             
             <h2 className="text-xl sm:text-2xl font-semibold text-purple-100 mb-6">
-              Grow wise together
+              We negotiate lower rates by grouping customers together
             </h2>
             
-            {/* Collective Wisdom Message - Sage approach */}
             <div className="bg-gradient-to-r from-indigo-950/60 to-slate-900/80 border border-indigo-800/40 rounded-lg p-4 mb-2 ring-1 ring-purple-600/20">
               <div className="flex items-start space-x-3">
-                <div className="text-2xl">🔮</div>
+                <div className="text-2xl">💰</div>
                 <div className="text-left">
                   <p className="text-sm text-indigo-100 font-medium mb-2">
-                    <span className="font-bold text-purple-200">Together we transform understanding</span> into meaningful change.
+                    <span className="font-bold text-purple-200">Like Costco, but for your monthly bills</span>
                   </p>
                   <p className="text-sm text-purple-200 font-bold">
-                    <span className="text-indigo-200">Join our wisdom journey.</span> Transform together.
+                    <span className="text-indigo-200">No fees. Just savings.</span>
                   </p>
                 </div>
               </div>
@@ -65,7 +63,7 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
           className="group relative w-full bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 hover:from-indigo-700 hover:via-purple-600 hover:to-blue-700 text-white text-xl font-semibold py-6 px-8 rounded-lg transition-all duration-300 shadow-2xl hover:shadow-purple-500/25 transform hover:scale-[1.03] active:scale-[0.97] ring-2 ring-purple-500/20 hover:ring-purple-400/40"
         >
           <span className="relative z-10 flex items-center justify-center">
-            ✨ Begin Journey
+            Get Started
             <svg className="w-6 h-6 ml-3 transition-transform group-hover:translate-x-1 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
             </svg>
@@ -75,19 +73,18 @@ export function WelcomeScreen({ onGetStarted }: WelcomeScreenProps) {
           <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-500 to-blue-600 rounded-lg blur opacity-20"></div>
         </button>
         
-        {/* Wisdom Values - Sage approach */}
         <div className="flex flex-wrap items-center justify-center mt-6 gap-4 text-sm font-medium">
           <div className="flex items-center">
             <span className="w-2 h-2 bg-indigo-400 rounded-full mr-2 animate-pulse"></span>
-            <span className="text-indigo-200">Collective wisdom</span>
+            <span className="text-indigo-200">Lower bills</span>
           </div>
           <div className="flex items-center">
             <span className="w-2 h-2 bg-purple-400 rounded-full mr-2 animate-pulse"></span>
-            <span className="text-purple-200">Mindful choices</span>
+            <span className="text-purple-200">No fees</span>
           </div>
           <div className="flex items-center">
             <span className="w-2 h-2 bg-blue-500 rounded-full mr-2 animate-pulse"></span>
-            <span className="text-blue-300">Transform together</span>
+            <span className="text-blue-300">Easy savings</span>
           </div>
         </div>
         

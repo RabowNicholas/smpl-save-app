@@ -139,7 +139,7 @@ export default function Home() {
         <div className="max-w-md mx-auto relative z-10">
           {/* SMPL Logo */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-4xl font-black text-yellow-400 animate-pulse">
               smpl
             </h1>
           </div>
@@ -154,13 +154,10 @@ export default function Home() {
               </div>
               
               <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-3">
-                Discover clarity in your financial choices
+                Loading your account
               </h1>
-              <p className="text-indigo-200 text-lg font-medium mb-4">
-                Grow wise together
-              </p>
               <p className="text-slate-300 text-base">
-                Loading your account...
+                Setting up your dashboard...
               </p>
             </div>
           </div>
@@ -276,7 +273,7 @@ function AppContent() {
         <div className="max-w-md mx-auto relative z-10">
           {/* SMPL Logo */}
           <div className="text-center mb-8">
-            <h1 className="text-4xl font-black bg-gradient-to-r from-indigo-400 via-purple-400 to-blue-500 bg-clip-text text-transparent animate-pulse">
+            <h1 className="text-4xl font-black text-yellow-400 animate-pulse">
               smpl
             </h1>
           </div>
@@ -291,13 +288,10 @@ function AppContent() {
               </div>
               
               <h1 className="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-blue-200 via-purple-300 to-indigo-200 bg-clip-text text-transparent mb-3">
-                Discover clarity in your financial choices
+                Loading your dashboard
               </h1>
-              <p className="text-indigo-200 text-lg font-medium mb-4">
-                Grow wise together
-              </p>
               <p className="text-slate-300 text-base">
-                Setting up your dashboard...
+                Setting up your services...
               </p>
             </div>
           </div>
